@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ion Shield — Tecpro Questionnaire Response</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF1F5;--sf:#FFF;--bd:#C8D4E0;--bd2:#DDE5EE;--ink:#1A2B3C;--ink2:#4A6070;--ink3:#8099B0;--blue:#1558A0;--pass:#1A7A48;--passbg:#E6F5EE;--warn:#A05C00;--warnbg:#FFF3DC;--crit:#A01818;--critbg:#FDEAEA;--open:#6040A0;--openbg:#F2EEFF;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;--nw:220px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.65}
+nav{position:fixed;top:0;left:0;width:var(--nw);height:100vh;background:#0F1E2E;color:#C8D8E8;overflow-y:auto;padding:28px 0 40px;z-index:100}
+nav h2{font-family:var(--mono);font-size:.65rem;color:#5A7890;letter-spacing:.06em;padding:0 18px 10px;border-bottom:1px solid #1E3348;margin-bottom:10px}
+nav a{display:block;padding:5px 18px;font-size:.75rem;color:#A0B8CC;text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+nav a:hover,nav a.on{color:#E8F0F8;border-left-color:#3A8FD4;background:#1A2E42}
+nav .lbl{font-family:var(--mono);font-size:.6rem;color:#3A5870;padding:14px 18px 3px;letter-spacing:.08em}
+main{margin-left:var(--nw);padding:0 0 80px;max-width:1080px}
+header{background:#0F1E2E;color:#E8F0F8;padding:38px 50px 32px;border-bottom:3px solid #1A6BBF}
+header .ey{font-family:var(--mono);font-size:.68rem;color:#5A90C0;letter-spacing:.1em;margin-bottom:8px}
+header h1{font-size:1.55rem;font-weight:300;line-height:1.25}
+header h1 strong{font-weight:600}
+.meta{display:flex;gap:28px;margin-top:16px;flex-wrap:wrap}
+.mi{font-family:var(--mono);font-size:.7rem}.mi span{color:#5A90C0;display:block;margin-bottom:2px}
+section{padding:40px 50px 32px;border-bottom:1px solid var(--bd2)}
+h2.sh{font-size:1.0rem;font-weight:600;color:#0F1E2E;border-left:4px solid var(--blue);padding-left:13px;margin-bottom:20px;display:flex;align-items:baseline;gap:10px}
+h2.sh .n{font-family:var(--mono);font-size:.7rem;color:var(--blue)}
+h3{font-size:.88rem;font-weight:600;margin:22px 0 9px;color:#1A2B3C}
+p{margin-bottom:.85em;max-width:74ch}
+p:last-child{margin-bottom:0}
+.tw{overflow-x:auto;margin:14px 0;border-radius:4px;border:1px solid var(--bd)}
+table{width:100%;border-collapse:collapse;font-size:.79rem}
+th{background:#1A2B3C;color:#C8D8E8;font-family:var(--mono);font-weight:400;font-size:.68rem;padding:9px 13px;text-align:left;letter-spacing:.03em;white-space:nowrap}
+td{padding:8px 13px;border-bottom:1px solid var(--bd2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even){background:#F6F8FB}
+code{font-family:var(--mono);font-size:.74rem;background:#E8EEF5;padding:1px 5px;border-radius:2px;color:#1558A0}
+.bp{background:var(--passbg);color:var(--pass);font-family:var(--mono);font-size:.66rem;padding:2px 7px;border-radius:2px;font-weight:600;white-space:nowrap}
+.bw{background:var(--warnbg);color:var(--warn);font-family:var(--mono);font-size:.66rem;padding:2px 7px;border-radius:2px;font-weight:600;white-space:nowrap}
+.bc{background:var(--critbg);color:var(--crit);font-family:var(--mono);font-size:.66rem;padding:2px 7px;border-radius:2px;font-weight:600;white-space:nowrap}
+.bo{background:var(--openbg);color:var(--open);font-family:var(--mono);font-size:.66rem;padding:2px 7px;border-radius:2px;font-weight:600;white-space:nowrap}
+.ca{border-left:4px solid;border-radius:0 4px 4px 0;padding:13px 16px;margin:16px 0;font-size:.84rem}
+.ca.ci{border-color:var(--blue);background:#EEF4FF}
+.ca.cw{border-color:var(--warn);background:var(--warnbg)}
+.ca.cc{border-color:var(--crit);background:var(--critbg)}
+.ca.cp{border-color:var(--pass);background:var(--passbg)}
+.ca strong{font-weight:600}
+.qb{background:var(--sf);border:1px solid var(--bd);border-radius:4px;margin:18px 0;overflow:hidden}
+.qh{background:#1A2B3C;color:#C8D8E8;font-family:var(--mono);font-size:.72rem;padding:8px 16px;display:flex;align-items:center;gap:12px}
+.qh .qn{background:#1558A0;color:#fff;border-radius:3px;padding:2px 8px;font-weight:600}
+.qh .qt{color:#A0C0D8}
+.qb .why{background:#F6F8FB;border-bottom:1px solid var(--bd2);padding:10px 16px;font-size:.78rem;color:var(--ink2);font-style:italic}
+.qb .ans{padding:14px 16px;font-size:.82rem}
+.qb .ans p{max-width:none}
+.calc{background:#0F1E2E;color:#B0D0E8;font-family:var(--mono);font-size:.73rem;padding:14px 18px;border-radius:4px;line-height:1.9;margin:10px 0;overflow-x:auto}
+.calc .lb{color:#5A90C0}.calc .vl{color:#78DFA8}.calc .er{color:#FF8080}
+.imp{background:#FFF8EE;border:1px solid #E8B840;border-radius:4px;padding:14px 16px;margin:14px 0;font-size:.82rem}
+.imp .it{font-family:var(--mono);font-size:.68rem;color:#7A4000;font-weight:600;margin-bottom:4px}
+@media(max-width:768px){nav{width:100%;height:auto;position:relative}main{margin-left:0}section,header{padding:26px 18px}}
+@media print{nav{display:none}main{margin-left:0}}
+</style>
+<script type='text/javascript' nonce='BrXAI5Jlt5Dgbg2NSmRb/A==' src='https://2c41980b-a23c-44f7-9fec-a410da4caff5.frame.claudeusercontent.com/ztWvsNeuxnPG-mOvqjzQSu_gkVzEP9TEF_h88RMyMUCOwRtaSNXxCjme8LAJzv5MDebr8z7-7rSJ5h5FNeG38ig8DAWkL4DjiQaTo2T-EF9qoD3Qh_I1OxbQRl49lGG0Ovp_DqmOB-zCglVDjKmXtIN661gmll8OxYp-5X8ydiKJwextKXcrH-JARXK4moDbLREym_z2-kCpjqich2bifFNqJgo-qar9URbew7meQAyugXx3DKS8IKf5VTUYAH--jee9pC8Eapi7LjhxRojPRsPvAy4KtXW6u_2hJepBBTppx8cSbP-6qali4ILqvghh2Kcsan-P5tIeNDX1nZ8sfe1Q8O1XAzuISHojP5u4vG_V5_Zoe4_FP1eYNLWUOgNo9lIajvwDJ2NN8M7hwrWZkTvzWj1YHux_qPu1DNHNlyoBem6EdhLTkBUUtZExH_PjFCq4RqzopeUDHipE0_rK1iOnAUC2zi7GEBLARvAhoNYQkNeADJy9-SBjSc8hpD6lwI31wOpXhxIvqcDqv35Gou8M4_OHkHWZnTTQ3Jh1egUQw0xUw4zF35N2dGYlYXkK7OtFcIfSwrdgFAnmOSvjhEUkZM1Ms4GxHoyBlV11bFpRYdor1JVT6854ASjpR5iRAoUoQPwvKA18TGYlFRDqvZPJJNogxw708T9_uq_ngcfiQvtZUWr58iYhJmhhpJxx5rG_pf7ooQEqjLDSAbnPJA'></script></head>
+<body>
+<nav>
+  <h2>ION SHIELD · TECPRO QA</h2>
+  <div class="lbl">DESIGN REVIEW</div>
+  <a href="#improvements">Design Improvements</a>
+  <div class="lbl">QUESTIONNAIRE</div>
+  <a href="#s1">Stage 1 · Outcome</a>
+  <a href="#s2">Stage 2 · Carrier Water</a>
+  <a href="#s3">Stage 3 · Dosing & Mixing</a>
+  <a href="#s4">Stage 4 · Atomisation</a>
+  <a href="#s5">Stage 5 · 70-bar Option</a>
+  <a href="#s6">Stage 6 · Manifold & Zoning</a>
+  <a href="#s7">Stage 7 · FAT</a>
+  <a href="#s8">Stage 8 · PLC & Interlocks</a>
+  <a href="#s9">Stage 9 · Flush & Purge</a>
+  <a href="#s10">Stage 10 · SAT</a>
+  <a href="#gates">Decision Gates</a>
+</nav>
+
+<main>
+<header>
+  <div class="ey">ION SHIELD BIOSECURITY — COMPANION DOCUMENT TO DESIGN PACKAGE REV A</div>
+  <h1><strong>Tecpro Questionnaire:</strong> Design Gap Analysis & Full Response</h1>
+  <div class="meta">
+    <div class="mi"><span>Source questionnaire</span>Tecpro_Questions_FAT_Performance_Requirements.docx · 11 Sep 2026</div>
+    <div class="mi"><span>Design basis</span>BOM_CHANGES_IMPACT_RANKED + ENGINEERING_VALIDATION_REPORT</div>
+    <div class="mi"><span>Questions answered</span>52 of 52 (10 stages)</div>
+  </div>
+</header>
+
+<!-- ── IMPROVEMENTS ── -->
+<section id="improvements">
+  <h2 class="sh"><span class="n">00</span>Design Improvements Revealed by This Questionnaire</h2>
+  <p>Working through the 52 questions identified 12 gaps or under-specified items in Design Package Rev A. These are listed below. Each is tagged with the question(s) that surfaced it and the section of Rev A to update. None of these changes the equipment selection or control philosophy — they add completeness and FAT readiness.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>Question(s)</th><th>Gap in Rev A</th><th>Improvement required</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Q6</td><td>Receiver sized as "100–200 L" with no justification</td><td>Confirm 150 L. Justification: minimum is 2.5 L; 150 L provides 122 s of buffer at full zone-switch load. State this in the design.</td><td><span class="bw">MEDIUM</span></td></tr>
+      <tr><td>2</td><td>Q8</td><td>Filtration schedule incomplete</td><td>Add: 100 µm basket strainer on WBT-201 outlet; basket strainer on Tecpro pump suction; 25 µm cartridge upstream of FCV-201 (already in design); 25 µm inline before nozzle manifold. AKIMist requires ≥25 µm filtration — confirm exact grade with IKEUCHI/Tecpro.</td><td><span class="bc">HIGH</span></td></tr>
+      <tr><td>3</td><td>Q19, Q20</td><td>Air/liquid ratio not mapped across dose range</td><td>Add a 3-scenario ALR table (25 / 50 / 75 mg/L). Key finding: ALR rises to 28.4 at 25 mg/L (finer droplets) and fails at 75 mg/L (stock flow exceeds P-101 max). See §4 below.</td><td><span class="bc">HIGH</span></td></tr>
+      <tr><td>4</td><td>Q22</td><td>Nozzle CV target stated but method not described</td><td>Add: individual nozzle gravimetric test (weigh collection per nozzle, 10 min). Add cracking check valves on each of the 8 branches (already specified but now explicitly for CoV). Target CV ≤ 5%.</td><td><span class="bw">MEDIUM</span></td></tr>
+      <tr><td>5</td><td>Q31</td><td>Spray uniformity test not in FAT plan</td><td>Add: 4×2 catch-tray collection grid at 500 mm from nozzle face, 10 min run at design point. Gravimetric acceptance: each tray within ±5% of mean.</td><td><span class="bw">MEDIUM</span></td></tr>
+      <tr><td>6</td><td>Q32</td><td>Nozzle blockage detection implicit, not specified</td><td>Add: zone-level air flow meter (one per zone). Alarm if zone air flow deviates >10% from setpoint. Add local pressure gauge on each of the 8 branches as visual diagnostic.</td><td><span class="bw">MEDIUM</span></td></tr>
+      <tr><td>7</td><td>Q37</td><td>FAT pass/fail criteria described in prose, not tabulated</td><td>Add formal 9-row numeric FAT pass/fail table (see §7 below). Must be signed before FAT starts.</td><td><span class="bc">HIGH</span></td></tr>
+      <tr><td>8</td><td>Q43</td><td>Batch data fields listed as "15 parameters" without specifying them</td><td>Add: explicit 15-field batch record schema with tag name, units, and sample interval. See §8 below.</td><td><span class="bw">MEDIUM</span></td></tr>
+      <tr><td>9</td><td>Q46</td><td>Flush endpoint defined as "AIT-201 &lt;50 mg/L" with no time limit or method fallback</td><td>Revise to: flush ends when AIT-201 &lt;50 mg/L AND FT-201 stable for 60 s, OR after 5 min whichever comes first. If AIT-201 unavailable, collect 50 mL drain sample and titrate (permanganate method).</td><td><span class="bw">MEDIUM</span></td></tr>
+      <tr><td>10</td><td>Q47</td><td>Component risk register absent</td><td>Add 6-row risk register for: nozzle orifices, static mixer, PTFE hose, FCV-201, Coriolis meters, P-101 diaphragm. See §9 below.</td><td><span class="bw">MEDIUM</span></td></tr>
+      <tr><td>11</td><td>Q48–50</td><td>SAT plan completely absent from Rev A</td><td>Add: FAT-to-SAT correlation matrix (8 measurements repeated), installed nozzle verification method (gravimetric per zone), and representative geometry test plan before first live batch.</td><td><span class="bw">MEDIUM</span></td></tr>
+      <tr><td>12</td><td>Q28</td><td>70-bar rejection is stated but the decision gate is not formalised</td><td>Add: written decision gate with two numeric triggers — if Tecpro cannot demonstrate Dv90 &lt;10 µm with PAA at actual duty point AND cannot demonstrate ≥95% PAA chemical recovery post-pump, two-fluid architecture is confirmed. No informal deviation.</td><td><span class="bc">HIGH</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="ca ci"><strong>How to use this document:</strong> The 52 answers below are T3's design-basis answers — what this design expects and requires from Tecpro. They define the minimum Tecpro must match or improve upon. Where an answer states a number (e.g., Dv90 &lt;10 µm, CV ≤5%), that becomes a proposed FAT criterion to be agreed with Tecpro before fabrication is released.</div>
+</section>
+
+<!-- ── STAGE 1 ── -->
+<section id="s1">
+  <h2 class="sh"><span class="n">S1</span>Stage 1 — Confirm the Performance Outcome (Q1–4)</h2>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q1</span><span class="qt">What performance outcome must the completed skid deliver?</span></div>
+    <div class="why">We want agreement on outcome before equipment selection.</div>
+    <div class="ans">
+      <p>The completed skid must deliver a homogeneous two-fluid aerosol of pre-blended 1.5% w/w PAA solution at <strong>Dv90 &lt;10 µm</strong> into a 30-tonne grain pile void volume of 25,000 L, achieving <strong>50 mg/L PAA vapour concentration</strong> throughout a 6-hour contact period. Verified performance criterion: <strong>1.25 kg PAA delivered</strong> per batch, confirmed by the dose controller integrating FT-101 mass flow. Secondary criterion: nozzle exit concentration within ±5% of theoretical (0.953% w/w).</p>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q2</span><span class="qt">What operating envelope for liquid flow, pressure, air pressure, and air/liquid ratio?</span></div>
+    <div class="why">Atomisation regime depends on combined operating point, not nominal pump pressure alone.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Scenario</th><th>Stock flow</th><th>Carrier flow</th><th>Total liquid</th><th>Nozzles active</th><th>Air demand</th><th>ALR (NL/L)</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>25 mg/L</td><td>6.1 L/h</td><td>2.3 L/h</td><td>8.4 L/h (3.5/nozzle)</td><td>6 × 03C TN</td><td>174 NL/min</td><td>28.4</td><td><span class="bp">WITHIN P-101 RANGE</span></td></tr>
+          <tr><td><strong>50 mg/L (design)</strong></td><td><strong>12.2 L/h</strong></td><td><strong>7.0 L/h</strong></td><td><strong>19.2 L/h</strong></td><td><strong>8 × 03C TN</strong></td><td><strong>232 NL/min</strong></td><td><strong>12.1</strong></td><td><span class="bp">CONFIRMED BASIS</span></td></tr>
+          <tr><td>75 mg/L</td><td>18.3 L/h</td><td>0.9 L/h</td><td>19.2 L/h</td><td>8 × 03C TN</td><td>232 NL/min</td><td>12.1</td><td><span class="bc">EXCEEDS P-101 MAX (15 L/h)</span></td></tr>
+        </tbody>
+      </table></div>
+      <p>All liquid pressures at nozzle inlet: <strong>3.0 barg</strong>. Air at nozzle inlet: <strong>3.0 barg</strong>. P-101 discharge: 3.5–4.0 barg. Carrier header: 4.5 barg. Note: 75 mg/L is out of scope for this skid without a higher-capacity P-101 or extended contact time (9 h).</p>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q3</span><span class="qt">Which variables should be controlled independently?</span></div>
+    <div class="why">Separating carrier, dose and atomisation energy improves repeatability.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Variable</th><th>Controlled by</th><th>Manipulated by</th><th>Monitored by</th></tr></thead>
+        <tbody>
+          <tr><td>PAA stock mass flow</td><td>FIC-101 (inner)</td><td>VFD-101 (P-101 speed + stroke)</td><td>FT-101 Coriolis</td></tr>
+          <tr><td>Carrier water flow</td><td>FIC-201 (ratio to FIC-101)</td><td>FCV-201 trim valve</td><td>FT-201 Coriolis</td></tr>
+          <tr><td>Atomisation air pressure</td><td>PIC-202 (independent)</td><td>PCV-202 back-pressure regulator</td><td>PT-202 on nozzle header</td></tr>
+          <tr><td>Delivered PAA mass</td><td>DIC-001 (outer / dose controller)</td><td>Sets FIC-101 setpoint</td><td>FT-101 integral over time</td></tr>
+          <tr><td>Mixed concentration</td><td>AIC-201 (slow trim, integral only)</td><td>Adjusts FCV-201 trim</td><td>AIT-201 sample loop</td></tr>
+        </tbody>
+      </table></div>
+      <p>The five loops are independent. Air pressure is not coupled to liquid flow — this is the key advantage of two-fluid architecture over the 70-bar single-fluid option.</p>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q4</span><span class="qt">Which requirements are supported by existing data vs. requiring empirical validation?</span></div>
+    <div class="why">Creates a transparent project risk register.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Requirement</th><th>Evidence source</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>1.25 kg PAA mass balance</td><td>First-principles calculation (EVR §1)</td><td><span class="bp">CALCULATED — CONFIRMED</span></td></tr>
+          <tr><td>12.2 L/h P-101 flow within spec</td><td>EVR §1 + BOM spec</td><td><span class="bp">CALCULATED — CONFIRMED</span></td></tr>
+          <tr><td>AKIMist 03C TN: 2.4 L/h + 29 NL/min at 3.0 bar</td><td>IKEUCHI catalogue (via EVR)</td><td><span class="bw">CATALOGUE — H03 OPEN</span></td></tr>
+          <tr><td>Dv90 &lt;10 µm from 03C TN</td><td>IKEUCHI general claim</td><td><span class="bw">CATALOGUE — NOT MEASURED</span></td></tr>
+          <tr><td>50 mg/L headspace PPM achieved</td><td>Mass balance only — no evaporation model</td><td><span class="bc">NOT VALIDATED — H08 OPEN</span></td></tr>
+          <tr><td>PAA stability through train</td><td>28 s residence time → &lt;0.1% degradation (kinetics)</td><td><span class="bw">CALCULATED — VERIFY BY ASSAY</span></td></tr>
+          <tr><td>Compressor 300 NL/min FAD sufficient</td><td>232 NL/min demand + 30% margin (corrected from EVR)</td><td><span class="bp">CALCULATED — VENDOR TO CONFIRM UNIT</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STAGE 2 ── -->
+<section id="s2">
+  <h2 class="sh"><span class="n">S2</span>Stage 2 — Carrier-Water / Booster System (Q5–9)</h2>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q5</span><span class="qt">Do you recommend the Tecpro vertical multistage inverter skid as carrier-water source? Exact model and duty?</span></div>
+    <div class="why">Identified as strongest Tecpro candidate for stable carrier delivery.</div>
+    <div class="ans"><p><strong>Yes, recommended</strong> — with a critical constraint. The Tecpro Vertical Multistage Skid with Inverter, 316SS wet end, is the preferred carrier-water source for this design. It provides pulseless flow, integral VFD/pressure-transducer PID, and compatible materials for water service. <strong>Required from Tecpro: exact model designation, pump curve, duty point efficiency, and NPSH required at 7 L/h and at minimum stable flow.</strong> The duty point (7 L/h at 4.5 barg) is almost certainly below the pump's minimum stable flow, meaning a recirculation line to WBT-201 is a non-negotiable part of the supply.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q6</span><span class="qt">What pressure stability during rapid downstream demand changes?</span></div>
+    <div class="why">Zone switching changes demand abruptly; instability changes flow and dose.</div>
+    <div class="ans">
+      <p>Target: <strong>±0.2 bar</strong> at the nozzle manifold header during zone switching (one zone closing or opening).</p>
+      <div class="calc">
+<span class="lb">Zone switching air demand step:</span>  116 NL/min (4 nozzles ON → OFF or OFF → ON)
+<span class="lb">Receiver buffer calculation:</span>
+  Minimum receiver = Q_step × t_lag × P_nozzle / (P_storage − P_min)
+                   = (116/60) NL/s × 2 s × 3.0 / (7.5 − 2.8)
+                   = <span class="vl">2.5 L minimum</span>
+<span class="lb">Specified receiver: 150 L</span>
+  Buffer time at full zone load = 150 × (7.5−2.8) / (3.0 × 116/60) = <span class="vl">122 seconds</span>
+<span class="lb">Conclusion:</span> 150 L receiver provides >2 minutes of buffer. Pressure instability during zone
+switching is effectively eliminated. FAT must demonstrate ±0.2 bar during a load-step test.
+      </div>
+      <p>For carrier water: the Tecpro VFD PID must respond to zone-switching demand steps. FAT acceptance: PT-201 reading stays within ±0.2 bar of setpoint within 5 s of a zone switch.</p>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q7</span><span class="qt">Minimum stable flow and maximum recommended flow?</span></div>
+    <div class="why">Need the true usable turndown, not only nominal capacity.</div>
+    <div class="ans"><p><strong>Unknown — Gap G-03 (open).</strong> This is the most critical Tecpro-specific question for the carrier pump. 7.0 L/h is the design carrier flow. The Tecpro multistage is almost certainly rated at tens of L/min. Running at 7 L/h without a recirculation line risks cavitation, bearing damage, and pressure instability. <strong>Tecpro must state minimum stable flow for the selected model. If this cannot be demonstrated at or below 7 L/h, the recirculation line (back to WBT-201) must be sized and included in scope.</strong> Maximum flow is not a constraint here; turndown is the concern.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q8</span><span class="qt">What filtration is required upstream of the pump and final nozzles?</span></div>
+    <div class="why">Fine atomising passages are sensitive to particulate loading.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Location</th><th>Filter type</th><th>Grade</th><th>Monitoring</th><th>Change basis</th></tr></thead>
+        <tbody>
+          <tr><td>WBT-201 outlet (before Tecpro pump suction)</td><td>Y-strainer or basket</td><td>100 µm</td><td>Local dP gauge</td><td>Quarterly or at 0.3 bar dP</td></tr>
+          <tr><td>Tecpro pump suction (confirm with Tecpro)</td><td>Basket strainer</td><td>per Tecpro spec</td><td>Local dP gauge</td><td>per Tecpro recommendation</td></tr>
+          <tr><td>Upstream of FCV-201 (carrier trim)</td><td>Cartridge filter</td><td>25 µm</td><td>Local dP gauge</td><td>Monthly or at 0.5 bar dP</td></tr>
+          <tr><td>TK-101 suction (chemical)</td><td>Strainer integral to pump or suction line</td><td>100 µm</td><td>Visual on disassembly</td><td>Quarterly</td></tr>
+          <tr><td>Nozzle manifold inlet (each zone)</td><td>Y-strainer inline</td><td>25 µm (confirm with IKEUCHI)</td><td>Local gauge</td><td>Monthly</td></tr>
+          <tr><td>Air supply (before PCV-202)</td><td>Coalescing + activated carbon</td><td>0.01 µm + odour</td><td>dP indicator</td><td>6-monthly</td></tr>
+        </tbody>
+      </table></div>
+      <p>The AKIMist 03C TN nozzle orifice is approximately 0.3–0.5 mm bore. The 25 µm filter at the manifold inlet ensures no particle larger than 1/10 of orifice diameter reaches the nozzle.</p>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q9</span><span class="qt">Complete wetted materials and elastomers?</span></div>
+    <div class="why">Chemical compatibility must be established for the actual formulation.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Stream</th><th>Approved materials</th><th>Prohibited materials</th></tr></thead>
+        <tbody>
+          <tr><td>PAA stock 1.5% w/w (Skid 101)</td><td>PTFE, PVDF, Hastelloy C-22, 316L SS, Viton (FKM)</td><td>Brass, bronze, copper, NBR, mild steel, EPDM (check PAA data)</td></tr>
+          <tr><td>Carrier water (Tecpro pump side)</td><td>316SS, EPDM or Viton — confirm with Tecpro</td><td>Copper alloys if present</td></tr>
+          <tr><td>Mixed stream post-quill (Skid 201)</td><td>316L, PTFE, Viton; static mixer 316L</td><td>Same as stock stream</td></tr>
+          <tr><td>Air supply train</td><td>316L, aluminium body for PCV-202 acceptable</td><td>No lubricated compressors — oil contamination catastrophic for PAA</td></tr>
+          <tr><td>Nozzle bodies</td><td>AKIMist 03C TN: 316SS with titanium/ceramic inserts per IKEUCHI spec</td><td>—</td></tr>
+          <tr><td>Transfer hose H-1</td><td>PTFE 6.35 mm ID, 316SS fittings, Viton ferrules</td><td>PVC, rubber, nylon</td></tr>
+        </tbody>
+      </table></div>
+      <p><strong>Required from Tecpro:</strong> confirm that the selected multistage wet end (impellers, wear rings, seals) is 316SS + compatible elastomers, not cast iron or standard EPDM without PAA compatibility data. The pump is water-only, but flush water may contain trace PAA at end of batch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── STAGE 3 ── -->
+<section id="s3">
+  <h2 class="sh"><span class="n">S3</span>Stage 3 — Chemical Dosing and Mixing (Q10–15)</h2>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q10</span><span class="qt">How does Tecpro propose to meter active chemistry into the carrier stream?</span></div>
+    <div class="why">Misting pump generates pressure; precision concentration requires dedicated metering.</div>
+    <div class="ans"><p><strong>This design's answer (for Tecpro to match or improve):</strong> PTFE-diaphragm metering pump (P-101), PVDF liquid end, 0–20 L/h at 8 barg. VFD-101 (0.37 kW) modulates speed and stroke. Range for this skid: 5–15 L/h (covers 25–50 mg/L). Turndown: 3:1 at constant accuracy. Target accuracy: <strong>±2% of flow setpoint at 12.2 L/h</strong>. The 3 kW peristaltic pump originally in the BOM is rejected — it is approximately 1,000× oversized on hydraulic power (see Design Package §2 Correction 1). Tecpro may propose an alternative metering technology, but it must meet PAA material compatibility, ±2% accuracy, and 5–15 L/h range.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q11</span><span class="qt">How will chemical dose track changes in carrier-water flow?</span></div>
+    <div class="why">Batch consistency depends on actual chemical mass delivery, not pump speed alone.</div>
+    <div class="ans"><p>Active ratio control: carrier setpoint (FIC-201) = total nozzle liquid capacity target minus FT-101 real-time reading. As FIC-101 varies (e.g., on dose controller ramp), FIC-201 automatically adjusts to maintain constant total nozzle flow. This is not a fixed ratio — it is a live difference controller. The outer dose controller (DIC-001) integrates FT-101 × stock concentration over time and ends the run on delivered mass, not elapsed time. Multi-point FAT calibration: dose accuracy verified gravimetrically at 25%, 50%, and 100% of nominal stock flow setpoint.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q12</span><span class="qt">What flow instrumentation on carrier and chemical streams?</span></div>
+    <div class="why">Independent measurements allow the PLC to detect dosing errors and calculate actual delivered mass.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Tag</th><th>Stream</th><th>Type</th><th>Range</th><th>Accuracy</th><th>Calibration</th></tr></thead>
+        <tbody>
+          <tr><td>FT-101</td><td>PAA stock (P-101 discharge)</td><td>Micro-Coriolis</td><td>0–30 kg/h</td><td>±0.2% of reading → ±0.024 L/h at 12.2 L/h</td><td>NIST-traceable, 3 points pre-FAT</td></tr>
+          <tr><td>FT-201</td><td>Carrier water</td><td>Micro-Coriolis</td><td>0–30 kg/h</td><td>±0.2% → ±0.014 L/h at 7.0 L/h</td><td>NIST-traceable, 3 points pre-FAT</td></tr>
+        </tbody>
+      </table></div>
+      <p>The 0–10 L/min magnetic flowmeters in the original BOM are replaced. At 12.2 L/h (0.20 L/min), a 0–10 L/min mag meter is at 2% of scale — its ±2% full-scale error becomes ±100% of reading. Coriolis removes this problem entirely. Wetted materials (Hastelloy C-22) to be confirmed with meter vendor for 1.5% PAA service.</p>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q13</span><span class="qt">Where does chemical injection and static mixing occur?</span></div>
+    <div class="why">Injection point and mixer determine whether atomiser receives a homogeneous formulation.</div>
+    <div class="ans">
+      <p>Injection via a 316L quill immediately downstream of FCV-201/FT-201 on the carrier line. PTFE check valve on the quill prevents carrier backflow. Immediately downstream: 8-element 316L static mixer, 25 mm bore, 300 mm length.</p>
+      <div class="calc">
+<span class="lb">Static mixer residence volume:</span>  π × (0.025/2)² × 0.3 m = 0.000147 m³ = 0.147 L
+<span class="lb">Residence time at 19.2 L/h total:</span>  0.147 / (19.2/3600) = <span class="vl">27.6 seconds</span>
+<span class="lb">PAA degradation at 20°C in 28 s:</span>  &lt;0.1% (kinetic models; verify by assay at FAT)
+<span class="lb">Homogenisation:</span>  8 elements provide >10 fold-and-split cycles; adequate for laminar Re = 143
+      </div>
+      <p>AIT-201 sample point is downstream of MX-201, before zone valves. This ensures the sample represents the actual mixed stream going to nozzles.</p>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q14</span><span class="qt">How will concentration be verified before atomisation?</span></div>
+    <div class="why">Pressure and pump speed do not prove concentration.</div>
+    <div class="ans"><p>AIT-201 on a sample slipstream drawn from the pipe between MX-201 and zone valves. A peristaltic sample pump draws flow continuously; sample returns to drain. The Q46/85 probe reads PAA in liquid phase. <strong>The mixed stream is ~9,530 mg/L (0.953% w/w) — confirm the analyser range covers this with ATI before specification (Gap G-01).</strong> A dilution stage (e.g., 10:1 inline dilution with clean water) may be required to bring the sample into the sensor's optimal range. FAT criterion: AIT-201 reading within ±10% of theoretical concentration.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q15</span><span class="qt">How will chemical stability through the dosing/atomisation train be demonstrated?</span></div>
+    <div class="why">Chemistry preservation is a performance concern; measurement not assumption.</div>
+    <div class="ans">
+      <p>Pre/post-train assay at FAT Phase 3 (full formulation):</p>
+      <p><strong>Sample 1 (inlet):</strong> draw 50 mL from TK-101 at batch start. <strong>Sample 2 (post-train):</strong> collect 50 mL from a nozzle manifold drain point or spray-catchment vessel during the batch. Both titrated by permanganate method (or iodometric — agree method with T3 before FAT). Acceptance: ≥95% PAA recovery (≤5% degradation through the train). Main degradation risk is NOT the 28 s mixer residence — it is TK-101 stock age. Specify maximum stock age on TK-101 (recommend &lt;24 h from preparation).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── STAGE 4 ── -->
+<section id="s4">
+  <h2 class="sh"><span class="n">S4</span>Stage 4 — Atomisation: Critical Performance (Q16–23)</h2>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q16</span><span class="qt">Which Tecpro nozzle family and exact model?</span></div>
+    <div class="why">Selection should be based on duty and measured performance.</div>
+    <div class="ans"><p><strong>IKEUCHI AKIMist 03C TN</strong>, sourced via Tecpro. 316SS body, titanium orifice insert, external-mix two-fluid. Flow at design point: 2.4 L/h liquid + 29 NL/min air at 3.0 barg each. <strong>New only — micro-orifice erosion risk prohibits second-hand sourcing.</strong> Tecpro to confirm this model is currently available and confirm the 3.0 bar duty curve (H03). If Tecpro recommends a different model or size, the flow balance must be re-verified against the 12.2 L/h stock constraint before acceptance.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q17</span><span class="qt">Internal-mix or external-mix, and why?</span></div>
+    <div class="why">Mixing arrangement affects atomisation, air consumption and operating stability.</div>
+    <div class="ans"><p><strong>External-mix.</strong> Air and liquid meet outside the nozzle body at the nozzle tip. Advantages for this application: (1) no contamination of the air orifice by PAA deposits or crystallisation; (2) liquid orifice can be cleaned without disturbing the air side; (3) lower clog risk with an active oxidising chemistry. Disadvantage: requires slightly higher air/liquid ratio than internal-mix for equivalent Dv90. Internal-mix achieves finer droplets at lower flows but the increased clog risk with PAA in the internal mixing chamber is unacceptable for a remote-deployment system.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q18</span><span class="qt">What droplet-size distribution does the design predict at the design point?</span></div>
+    <div class="why">"Fine fog" is not a measurable acceptance criterion.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Parameter</th><th>Value</th><th>Source</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Dv90 (largest 10%)</td><td>&lt;10 µm</td><td>IKEUCHI AKIMist catalogue claim (water)</td><td><span class="bw">CATALOGUE — FAT REQUIRED</span></td></tr>
+          <tr><td>SMD (Sauter Mean Diameter)</td><td>3–5 µm (estimated)</td><td>Extrapolation from IKEUCHI published data</td><td><span class="bw">ESTIMATED — NOT MEASURED</span></td></tr>
+          <tr><td>Dv10 / Dv50</td><td>Not specified</td><td>Not available from catalogue</td><td><span class="bc">OPEN — REQUEST FROM IKEUCHI</span></td></tr>
+          <tr><td>Measurement method</td><td>Laser diffraction (Malvern Spraytec or Sympatec HELOS)</td><td>Industry standard</td><td><span class="bw">THIRD-PARTY HIRE — ARRANGE FOR FAT</span></td></tr>
+        </tbody>
+      </table></div>
+      <p>FAT acceptance criterion: <strong>Dv90 &lt;10 µm measured by laser diffraction at the design point (3.0 bar liquid, 3.0 bar air, 2.4 L/h per nozzle) using 1.5% PAA formulation or an agreed surrogate.</strong></p>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q19</span><span class="qt">How does droplet size change as liquid flow is reduced or increased?</span></div>
+    <div class="why">Need to know whether dose turndown compromises atomisation.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Scenario</th><th>Liquid per nozzle</th><th>Air per nozzle</th><th>ALR (NL/L)</th><th>Expected droplet trend</th></tr></thead>
+        <tbody>
+          <tr><td>25 mg/L (min dose)</td><td>~1.02 L/h</td><td>29 NL/min</td><td>28.4</td><td>Finer droplets — higher ALR generally improves atomisation</td></tr>
+          <tr><td>50 mg/L (design)</td><td>2.4 L/h</td><td>29 NL/min</td><td>12.1</td><td>Dv90 &lt;10 µm (design point)</td></tr>
+          <tr><td>Below minimum stable flow</td><td>&lt;~0.5 L/h (est.)</td><td>29 NL/min</td><td>&gt;58</td><td>Intermittent/dribble — do not operate</td></tr>
+        </tbody>
+      </table></div>
+      <p><strong>Required from Tecpro/IKEUCHI: droplet-size curve across the liquid flow range 0.5–2.4 L/h at fixed 3.0 bar air.</strong> This determines the minimum usable batch operating point and validates the 25 mg/L scenario.</p>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q20</span><span class="qt">How does droplet size respond to atomising-air pressure and air/liquid ratio?</span></div>
+    <div class="why">Two-fluid architecture provides an additional control variable.</div>
+    <div class="ans"><p>Air/liquid ratio is the primary droplet-size control variable. At 3.0 bar air and 2.4 L/h liquid: ALR = <strong>12.1 NL/L</strong>. The PLC monitors PT-202 (air pressure) and FT-204 (zone air flow, to be added per Improvement #6). Increasing air pressure at constant liquid flow increases ALR → finer droplets but higher air consumption and compressor load. <strong>Recommended control strategy: hold air pressure constant at 3.0 barg; modulate liquid flow only (via FIC-101/FIC-201). Use air pressure only as a trim if droplet size drifts.</strong> Required from Tecpro: air/liquid operating map showing Dv90 contours vs. liquid flow and air pressure.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q21</span><span class="qt">What is the lowest stable liquid flow without dribble or unacceptable coalescence?</span></div>
+    <div class="why">Establishes the minimum usable batch operating point.</div>
+    <div class="ans"><p><strong>Not established — must be tested at FAT.</strong> General guidance for external-mix two-fluid nozzles: stable atomisation typically requires a minimum liquid velocity through the liquid orifice sufficient to form a stable liquid sheet. For AKIMist, IKEUCHI publishes a minimum of approximately 0.5 L/h in water; PAA (lower surface tension ≈40 mN/m vs. 72 mN/m for water) may be easier to atomise at lower flows. FAT test: reduce liquid flow in 0.1 L/h steps from 2.4 L/h with laser diffraction measuring Dv90 at each step. Record the flow at which Dv90 exceeds 10 µm or intermittent spray begins.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q22</span><span class="qt">What nozzle-to-nozzle variation should we expect?</span></div>
+    <div class="why">Manifold imbalance creates under- and over-treatment even when total pump flow looks correct.</div>
+    <div class="ans">
+      <div class="calc">
+<span class="lb">Manifold hydraulic balance at 2.4 L/h per branch:</span>
+  Branch bore: 6 mm, length: 100 mm, Re = 143 (fully laminar)
+  Branch pressure drop: 128 × 0.001 × 0.1 × (2.4/3600/1000) / (π × 0.006⁴) = <span class="vl">0.000021 bar</span>
+<span class="lb">Hydraulic pressure drop is negligible — nozzle-to-nozzle variation is driven by:</span>
+  (a) Nozzle orifice machining tolerance (±0.01 mm on 0.3 mm bore → ±6–7% CV on flow)
+  (b) Mitigated by: cracking check valves on each branch
+<span class="vl">Target: CV ≤ 5% nozzle-to-nozzle after check valves</span>
+      </div>
+      <p>FAT verification: individual nozzle gravimetric collection (one weighed catch tray per nozzle, 10-minute run). Calculate mean, SD, and CV across all 8 nozzles. Acceptance: CV ≤ 5%. Any nozzle more than 10% from mean to be replaced and re-tested before shipment.</p>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q23</span><span class="qt">What air filtration, pressure regulation and flow control are required?</span></div>
+    <div class="why">Air instability changes atomisation performance and batch consistency.</div>
+    <div class="ans"><p>Air train (Skid 201): P-202 (oil-free, 7–8 bar storage) → 0.01 µm coalescing filter → refrigerant dryer (dew point ≤3°C) → 150 L receiver → PCV-202 (3.0 barg set, ±0.2 bar) → air PSV (5.0 barg, atmospheric discharge) → zone solenoids (XV-AA, XV-AB) → nozzle inlets. Filter differential pressure monitored by local gauge; change-out at 0.5 bar dP. Stability requirement: PT-202 within ±0.2 bar of 3.0 barg during any zone-switching event. The 150 L receiver delivers 122 s buffer — this guarantees stability during zone changes.</p></div>
+  </div>
+</section>
+
+<!-- ── STAGE 5 ── -->
+<section id="s5">
+  <h2 class="sh"><span class="n">S5</span>Stage 5 — 70-bar FOG Option (Q24–28)</h2>
+
+  <div class="ca cc"><strong>Design position:</strong> The 70-bar hydraulic option is not recommended by this design. The questions below state the evidence required from Tecpro if they believe the hydraulic option can meet the outcome, and the formal decision gate that ends the evaluation.</div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q24</span><span class="qt">Does Tecpro believe the FOG 40/70 VAR 2 or APERTO can meet the required treatment performance?</span></div>
+    <div class="why">Want engineering judgement supported by evidence, not assumption.</div>
+    <div class="ans"><p><strong>This design does not recommend it.</strong> Three technical objections: (1) 70-bar hydraulic atomisation through standard Tecpro nozzles produces Dv90 of approximately 15–35 µm — the requirement is Dv90 &lt;10 µm. (2) Standard Tecpro FOG pump heads use brass, which is incompatible with PAA. 316L/Hastelloy heads would need to be specified and confirmed. (3) PAA chemical stability through a 70-bar triplex plunger (significant temperature and pressure spike) has not been demonstrated. If Tecpro believes the hydraulic option can work, they must address all three objections with measured data before this design changes its position.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q25</span><span class="qt">If proposed, what measured droplet distribution will a hydraulic nozzle achieve?</span></div>
+    <div class="why">Nominal pressure is not proof of droplet performance.</div>
+    <div class="ans"><p>Required from Tecpro if the option is proposed: laser diffraction (Malvern Spraytec or Sympatec HELOS) test at actual PAA formulation (1.5% w/w), actual flow and actual operating pressure. <strong>Acceptance band: Dv90 &lt;10 µm.</strong> Test must be at the same liquid and air conditions as the intended skid configuration — not at 70 bar with water as a proxy. If Tecpro does not have a laser diffractometer, the test can be arranged through an independent spray laboratory; cost to be agreed before FAT.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q26</span><span class="qt">How does the hydraulic system behave during turndown?</span></div>
+    <div class="why">A batch system may require variable chemical delivery; loss of atomisation quality at low flow is a process limitation.</div>
+    <div class="ans"><p>Hydraulic atomisation is highly sensitive to turndown. For a fixed-orifice hydraulic nozzle: flow scales with √(pressure), so halving the flow requires only 25% of design pressure. For a nozzle designed for 70 bar, operation at 35 bar (half design pressure) dramatically degrades the spray cone and increases Dv90. At 25 mg/L (stock flow 6.1 L/h vs. 12.2 L/h), the hydraulic system would need to operate at roughly 17 bar — likely outside the fine-atomisation regime. Required: maximum-to-minimum turndown test covering the 25–50 mg/L range with Dv90 measurement at each point.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q27</span><span class="qt">What evidence does Tecpro have for chemical stability through the 70-bar pump?</span></div>
+    <div class="why">The design assessment raises this concern; the correct answer is an assay, not an assumption.</div>
+    <div class="ans"><p>No evidence currently available. Required assay protocol: (1) fill a recirculation loop with 1.5% PAA; (2) run the 70-bar triplex plunger at design pressure for 60 minutes of continuous recirculation; (3) draw 50 mL samples at t=0, t=15, t=30, t=60 min; (4) titrate each sample for PAA concentration. Acceptance: &lt;5% PAA loss at t=60. Also monitor fluid temperature at pump discharge — PAA degradation is strongly temperature-dependent (doubles per 10°C rise). Record discharge temperature throughout the test.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q28</span><span class="qt">If hydraulic option fails the criteria, will Tecpro accept two-fluid architecture as design basis?</span></div>
+    <div class="why">Establishes an objective decision gate before fabrication is locked in.</div>
+    <div class="ans">
+      <div class="imp">
+        <div class="it">FORMAL DECISION GATE — 70-BAR HYDRAULIC OPTION</div>
+        <p>Two-fluid (AKIMist) architecture is confirmed as the design basis if either of the following is true:</p>
+        <p>(1) Laser diffraction testing of the proposed hydraulic nozzle at 1.5% PAA, actual flow and actual pressure does not achieve Dv90 &lt;10 µm.</p>
+        <p>(2) Pre/post-pump PAA assay shows &gt;5% PAA loss after 60 min recirculation at 70 bar.</p>
+        <p>This decision gate must be agreed in writing with Tecpro before fabrication is released. No informal deviation from the gate criteria will be accepted. If Tecpro cannot conduct the test before fabrication, two-fluid architecture is the default.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STAGE 6 ── -->
+<section id="s6">
+  <h2 class="sh"><span class="n">S6</span>Stage 6 — Manifold, Zoning and Treatment Uniformity (Q29–33)</h2>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q29</span><span class="qt">How will the atomisation system be divided into treatment zones?</span></div>
+    <div class="why">Treatment performance depends on spatial distribution, not total spray rate alone.</div>
+    <div class="ans"><p><strong>Two zones of 4 nozzles each.</strong> Zone A: 4 × AKIMist 03C TN (9.6 L/h liquid, 116 NL/min air). Zone B: 4 × AKIMist 03C TN (same). Each zone has an independent liquid solenoid valve (XV-ZA, XV-ZB, 24 VDC NC) and an independent air solenoid (XV-AA, XV-AB). Zones can operate independently (partial treatment, commissioning) or simultaneously (full treatment). Manifold architecture: 316L block with equal-length branches to each of 8 nozzles. The 2-zone split allows zone-by-zone commissioning and fault isolation — if Zone A has a blockage, Zone B can continue while Zone A is investigated.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q30</span><span class="qt">How will the manifold be hydraulically and pneumatically balanced?</span></div>
+    <div class="why">Pressure drop can create systematic nozzle-to-nozzle variation.</div>
+    <div class="ans">
+      <div class="calc">
+<span class="lb">Liquid manifold hydraulic balance:</span>
+  Branch conditions: 6 mm ID bore, 100 mm length, 2.4 L/h per branch
+  Re per branch = ρ × v × d / µ = 1010 × 0.047 × 0.006 / 0.001 = <span class="vl">143 (laminar)</span>
+  Branch ΔP (Hagen-Poiseuille) = 128 × µ × L × Q / (π × d⁴) = <span class="vl">0.000021 bar (negligible)</span>
+<span class="lb">Conclusion:</span> At these flows, hydraulic pressure drop is essentially zero.
+  Nozzle-to-nozzle variation is driven by orifice manufacturing tolerance, not manifold dP.
+  Balance valves are unnecessary. Symmetric branch geometry is sufficient.
+<span class="lb">Air manifold:</span>
+  12 mm header at 232 NL/min: velocity = 0.047 m/s (negligible dP)
+  Each 6 mm branch at 29 NL/min × (3+1)/1 = 116 NL/min compressed → v ≈ 6 m/s
+  Branch dP at 6 m/s in 6mm, 100mm length ≈ <span class="vl">0.01 bar (acceptable)</span>
+      </div>
+      <p>Balancing method: symmetric manifold geometry (equal branch lengths). Individual check valves on each liquid branch absorb the orifice tolerance variability. Individual pressure gauges on each branch for visual monitoring during FAT nozzle tests.</p>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q31</span><span class="qt">How will spatial uniformity be verified at FAT?</span></div>
+    <div class="why">Distribution problems discovered in the workshop, not on site.</div>
+    <div class="ans"><p><strong>Spray mapping protocol:</strong> Position a 4×2 collection grid of individual catch trays (one per nozzle position) at 500 mm from nozzle face. Run both zones simultaneously at design point (3.0 bar liquid, 3.0 bar air, 19.2 L/h total) for 10 minutes. Weigh each tray before and after. Calculate mean collection mass and CV across all 8 trays. <strong>Acceptance: each tray within ±5% of the mean mass (CV ≤ 5%).</strong> Any tray outside ±10% triggers investigation before shipment. Photograph the spray pattern (backlit against a dark background) to confirm spray cone geometry.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q32</span><span class="qt">How will partial nozzle blockage or failure be detected?</span></div>
+    <div class="why">A blocked nozzle may leave total pump flow apparently normal while creating a local treatment deficit.</div>
+    <div class="ans"><p>Two-level detection: <strong>(1) Zone level:</strong> one air flow meter per zone (FT-ZA, FT-ZB — addition from Design Improvement #6). A blocked nozzle in a 4-nozzle zone reduces zone air flow by 25%. Alarm threshold: zone air flow deviates &gt;10% from setpoint for &gt;30 s. Zone liquid flow is monitored via FT-201 (shared, but zone valve position provides partial isolation). <strong>(2) Local visual:</strong> individual pressure gauge on each liquid branch at the manifold. Blocked nozzle shows elevated branch pressure. Available to operator during FAT and at SAT. Full individual nozzle monitoring (one flow meter per nozzle) is not specified — it would add 8 instruments at a cost disproportionate to the benefit for an 8-nozzle pilot.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q33</span><span class="qt">Can individual zones be isolated for commissioning and maintenance?</span></div>
+    <div class="why">Reduces commissioning time and improves fault finding.</div>
+    <div class="ans"><p>Yes. XV-ZA and XV-ZB (liquid) and XV-AA and XV-AB (air) are independently operable from the PLC or via local manual override on the panel. Commissioning sequence: (1) Zone A liquid and air open; Zone B liquid closed, air open (air purge only). Verify Zone A nozzle performance. (2) Then Zone B. (3) Both zones for integrated test. Maintenance access: 600 mm service aisle in front of nozzle manifold face (per GA). Manual isolation handles (lockable) on each zone valve for maintenance isolation. Maintenance can be performed on one zone while the other zone runs, subject to a safe-work procedure.</p></div>
+  </div>
+</section>
+
+<!-- ── STAGE 7 ── -->
+<section id="s7">
+  <h2 class="sh"><span class="n">S7</span>Stage 7 — FAT: Minimum Performance Evidence (Q34–39)</h2>
+
+  <h3>Proposed Numeric FAT Pass/Fail Criteria</h3>
+  <div class="tw"><table>
+    <thead><tr><th>FAT Block</th><th>Measurement</th><th>Pass criterion</th><th>Failure action</th></tr></thead>
+    <tbody>
+      <tr><td>Mechanical integrity</td><td>Hydrostatic at 1.5× MAWP (8 barg × 1.5 = 12 barg), 30 min hold</td><td>Zero leakage, zero permanent deformation</td><td>Identify leak location, repair, full retest</td></tr>
+      <tr><td>Carrier pressure stability</td><td>PT-201 during zone switching (4-nozzle zone ON then OFF)</td><td>≤ ±0.2 bar deviation, recovery within 5 s</td><td>Increase receiver or tune VFD PID</td></tr>
+      <tr><td>Dosing accuracy</td><td>FT-101 gravimetric comparison at 25%, 50%, 100% of 12.2 L/h setpoint</td><td>≤ ±2% at each setpoint</td><td>Recalibrate, adjust VFD gain, retest</td></tr>
+      <tr><td>Mixing quality</td><td>AIT-201 reading vs. theoretical (3 samples per run)</td><td>Within ±10% of 0.953% w/w theoretical</td><td>Check dilution, static mixer, AIT calibration</td></tr>
+      <tr><td>Atomisation (droplet size)</td><td>Laser diffraction at design point (1.5% PAA or agreed surrogate)</td><td>Dv90 &lt; 10 µm</td><td>Adjust nozzle model or operating pressure; retest</td></tr>
+      <tr><td>Nozzle uniformity</td><td>Individual nozzle gravimetric collection, 10 min, all 8</td><td>CV ≤ 5%; no individual nozzle &gt;10% from mean</td><td>Replace outlier nozzles, re-balance, retest</td></tr>
+      <tr><td>Chemical recovery</td><td>Pre/post-train PAA titration (PAA mass in vs. out)</td><td>≥ 95% recovery (≤ 5% loss)</td><td>Investigate residence time, temperature; retest</td></tr>
+      <tr><td>Controls / interlocks</td><td>Fault injection: air loss, low level, PSHH, E-stop, comms loss</td><td>Correct response within specified time for each (&lt;50 ms E-stop, &lt;2 s comms)</td><td>Debug PLC ladder, retest affected interlocks</td></tr>
+      <tr><td>Repeatability</td><td>3 consecutive identical recipes at 50 mg/L setpoint</td><td>Delivered PAA mass within ±3% across all 3 runs</td><td>Identify drift source; retest 3 more runs</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q34</span><span class="qt">Which FAT instruments will Tecpro use and calibration status?</span></div>
+    <div class="why">Measurement credibility matters as much as the result.</div>
+    <div class="ans"><p>Required instrument set: (1) NIST-traceable calibrated deadweight tester for pressure gauges. (2) Calibrated weigh scale (±1 g, class M2) for gravimetric flow verification. (3) Laser diffractometer — Malvern Spraytec or Sympatec HELOS (third-party hire if Tecpro does not own one). (4) PAA titration kit — permanganate method, agreed with T3 pre-FAT. (5) Calibrated data logger for time-stamped trend capture (10 s intervals minimum). <strong>All calibration certificates must be submitted to T3 at least 5 working days before FAT starts.</strong> Any instrument not having a current calibration certificate is not acceptable for FAT measurement.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q35</span><span class="qt">Will droplet testing use the actual production nozzle/manifold configuration?</span></div>
+    <div class="why">Testing a different setup may not represent the production skid.</div>
+    <div class="ans"><p><strong>Yes — mandatory.</strong> Droplet testing must use the 8 production nozzles in their production manifold configuration, with production zone valves, production air train (including PCV-202 and the 150 L receiver), and production liquid pump and flow meter. No test-rig substitutions. The laser diffraction probe will be positioned at 500 mm from nozzle face, which represents the near-field spray characterisation point. A separate far-field (2 m) measurement point is recommended as supplementary data.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q36</span><span class="qt">Will FAT use the intended formulation or a validated surrogate?</span></div>
+    <div class="why">Water-only testing may not represent formulation-dependent behaviour.</div>
+    <div class="ans">
+      <p>Three-phase approach:</p>
+      <p><strong>Phase 1 (water only):</strong> Proves carrier pressure, flow stability, and controls/interlocks. Safe, fast, full repeatability testing. Water surface tension (72 mN/m) will produce conservative (larger) droplets vs. PAA. Droplet size measured in Phase 1 is supplementary data only — not used for acceptance.</p>
+      <p><strong>Phase 2 (0.5% w/w PAA):</strong> Proves dosing accuracy, mixing, and chemical recovery. Safer than full-strength stock. Droplet size measured — used to establish trend vs. Phase 1.</p>
+      <p><strong>Phase 3 (1.5% w/w PAA — full formulation):</strong> Proves atomisation quality at production conditions. Droplet size measurement from this phase is the <strong>acceptance measurement</strong>. COSHH/safety controls required: PAA PPE, adequate ventilation, spill containment in FAT area.</p>
+    </div>
+  </div>
+
+  <div class="qb"><div class="qh"><span class="qn">Q37</span><span class="qt">What numeric FAT pass/fail criteria?</span></div><div class="why">Agreed before testing, not after the result is known.</div><div class="ans"><p>See the pass/fail table above. All criteria must be agreed in writing with Tecpro and T3 before FAT Phase 1 begins. No criteria to be changed after FAT has started.</p></div></div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q38</span><span class="qt">How many repeat cycles?</span></div>
+    <div class="why">One successful cycle demonstrates capability; repeated cycles demonstrate stability.</div>
+    <div class="ans"><p>Minimum: 3 complete batch cycles at the 50 mg/L nominal setpoint (Phase 3, 1.5% PAA). Plus 1 cycle at 25 mg/L setpoint (Phase 3). Total minimum FAT cycles: 4. Statistical summary required: mean ± SD for delivered mass, peak pressure, flush endpoint time, and AIT-201 reading across the 3 nominal cycles.</p></div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q39</span><span class="qt">What is the procedure if FAT fails?</span></div>
+    <div class="why">Need controlled engineering change and retest rather than informal deviation acceptance.</div>
+    <div class="ans"><p>(1) PLC automatically captures and saves the last 30 min of trend data on test termination. (2) Tecpro raises a Non-Conformance Report (NCR) within 24 hours describing the failure, suspected root cause, and proposed corrective action. (3) T3 reviews and approves the NCR and root cause before any hardware change is made. (4) Engineering Change Notice (ECN) raised for any hardware modification. (5) After ECN implementation, the full affected FAT block is repeated — not just the failed test. (6) No partial acceptance, written deviations, or "accept subject to site resolution" without explicit written agreement from T3.</p></div>
+  </div>
+</section>
+
+<!-- ── STAGE 8 ── -->
+<section id="s8">
+  <h2 class="sh"><span class="n">S8</span>Stage 8 — PLC, Interlocks and Batch Record (Q40–44)</h2>
+
+  <div class="qb"><div class="qh"><span class="qn">Q40</span><span class="qt">Can Tecpro integrate into an industrial PLC/HMI architecture rather than standalone timers/app controls?</span></div><div class="why">PLC integration is necessary for zoning, interlocks, ratio control and data capture.</div><div class="ans"><p>Required: full integration into Siemens S7-1500F master PLC with PROFINET to VFDs and KTP700 HMI. Tecpro must supply: (1) all instruments with 4–20 mA or PROFINET output; (2) all solenoid valves with 24 VDC coils; (3) all VFDs with PROFINET or 4–20 mA speed reference input. The FOG APP Bluetooth controller and any standalone timers are excluded — these cannot provide hardwired interlocks or batch data capture. T3 writes and validates application software. Tecpro's obligation: prove that the integrated I/O works correctly at FAT (all signals present, all responses in correct time).</p></div></div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q41</span><span class="qt">What permissives must be satisfied before atomisation starts?</span></div>
+    <div class="why">Prevents treatment with inadequate water, air, chemical, pressure or other critical conditions.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Permissive</th><th>Tag</th><th>Setpoint</th><th>If not satisfied</th></tr></thead>
+        <tbody>
+          <tr><td>Air pressure ≥ minimum</td><td>PT-202</td><td>≥ 2.8 barg</td><td>Hold start; alarm</td></tr>
+          <tr><td>Carrier flow established</td><td>FT-201</td><td>≥ 5 L/h</td><td>Hold start; alarm</td></tr>
+          <tr><td>TK-101 level above LAL</td><td>LAL-101</td><td>≥ 20% of 100 L</td><td>Hold start; alarm</td></tr>
+          <tr><td>WBT-201 level above LAL</td><td>LAL-201</td><td>≥ 30% of 200 L</td><td>Hold start; alarm</td></tr>
+          <tr><td>At least one zone liquid valve open</td><td>XV-ZA or XV-ZB</td><td>Open command confirmed</td><td>Hold start; alarm</td></tr>
+          <tr><td>E-stop reset (no latched trip)</td><td>ESD-1 health</td><td>24 VDC health = HIGH</td><td>Hold start; alarm</td></tr>
+          <tr><td>Compressor running</td><td>P-202 run DI</td><td>Run feedback = TRUE</td><td>Hold start; alarm</td></tr>
+          <tr><td>Bund dry</td><td>LIT-bund</td><td>No liquid detected</td><td>Hold start; alarm</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q42</span><span class="qt">How will low chemical, low water flow, air loss, blockage and abnormal pressure be detected?</span></div>
+    <div class="why">These failures can produce an ineffective batch without obvious total system failure.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Fault</th><th>Detected by</th><th>Threshold</th><th>PLC action</th></tr></thead>
+        <tbody>
+          <tr><td>Low chemical level</td><td>LAL-101 (float switch)</td><td>&lt;10% of TK-101</td><td>Alarm LAL; stop P-101 at LAL-LAL (&lt;5%)</td></tr>
+          <tr><td>Low carrier water flow</td><td>FT-201 deviation</td><td>&lt;3 L/h or &gt;15% from setpoint for &gt;30 s</td><td>Alarm; stop P-101 if sustained</td></tr>
+          <tr><td>Air pressure loss</td><td>PT-202</td><td>&lt;2.5 barg</td><td>Immediate P-101 stop + XV-101 close (hardwired)</td></tr>
+          <tr><td>Nozzle zone blockage</td><td>FT-ZA / FT-ZB (zone air flow meter)</td><td>&gt;10% deviation from setpoint for &gt;30 s</td><td>Alarm; flag affected zone</td></tr>
+          <tr><td>Overpressure chemical side</td><td>PT-101</td><td>&gt;4.5 barg → PAH alarm; &gt;5.5 barg → PSHH</td><td>PAH: alarm. PSHH: P-101 STO + XV-101 close (hardwired)</td></tr>
+          <tr><td>P-101 flow low (dry-run or cavitation)</td><td>FT-101 deviation</td><td>&lt;50% of setpoint for &gt;10 s</td><td>Alarm; stop P-101</td></tr>
+          <tr><td>PLC-VFD comms loss</td><td>PROFINET watchdog</td><td>Timeout &gt;2 s</td><td>VFDs coast to stop; XV-101 closes</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q43</span><span class="qt">What batch data will be recorded?</span></div>
+    <div class="why">A treatment needs an auditable record of what the system actually did.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Field</th><th>Tag / source</th><th>Units</th><th>Interval</th></tr></thead>
+        <tbody>
+          <tr><td>Batch ID (auto-generated)</td><td>PLC clock + counter</td><td>—</td><td>At batch start</td></tr>
+          <tr><td>Operator ID</td><td>HMI login</td><td>—</td><td>At batch start</td></tr>
+          <tr><td>Recipe name / PPM setpoint</td><td>DIC-001 setpoint</td><td>mg/L</td><td>At batch start</td></tr>
+          <tr><td>Stock flow (instantaneous)</td><td>FT-101</td><td>L/h</td><td>10 s</td></tr>
+          <tr><td>Cumulative PAA mass delivered</td><td>DIC-001 integrator</td><td>kg</td><td>10 s</td></tr>
+          <tr><td>Carrier water flow</td><td>FT-201</td><td>L/h</td><td>10 s</td></tr>
+          <tr><td>P-101 discharge pressure</td><td>PT-101</td><td>barg</td><td>10 s</td></tr>
+          <tr><td>Air header pressure</td><td>PT-202</td><td>barg</td><td>10 s</td></tr>
+          <tr><td>Mixed PAA concentration</td><td>AIT-201</td><td>% w/w</td><td>30 s</td></tr>
+          <tr><td>Zone valve states</td><td>XV-ZA, XV-ZB, XV-AA, XV-AB</td><td>0/1</td><td>On change</td></tr>
+          <tr><td>P-101 VFD speed</td><td>VFD-101 feedback</td><td>Hz</td><td>10 s</td></tr>
+          <tr><td>TK-101 level</td><td>LAL-101 / LIT-101</td><td>%</td><td>60 s</td></tr>
+          <tr><td>All alarm events</td><td>PLC alarm log</td><td>—</td><td>On event</td></tr>
+          <tr><td>Batch end reason</td><td>DIC-001 (mass target / operator stop / trip)</td><td>code</td><td>At batch end</td></tr>
+          <tr><td>Dose target vs. actual</td><td>DIC-001 setpoint vs. integrator</td><td>kg / %</td><td>At batch end</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="qb"><div class="qh"><span class="qn">Q44</span><span class="qt">Can batch record be exported to SCADA/MES/data systems?</span></div><div class="why">Enables correlation of treatment performance with quality outcomes.</div><div class="ans"><p>OPC-UA server on the S7-1500F provides real-time and historical data export to any OPC-UA client (SCADA, MES, historian). Alternatively, CSV batch report auto-generated at batch end and available via HMI USB port. PDF batch report (key parameters, mass chart, alarm log) auto-generated and stored in PLC memory (last 100 batches). Data format and tag naming to be agreed with T3 during software design — this is a T3 obligation, not a Tecpro obligation.</p></div></div>
+</section>
+
+<!-- ── STAGE 9 ── -->
+<section id="s9">
+  <h2 class="sh"><span class="n">S9</span>Stage 9 — Flush, Purge and Next-Batch Readiness (Q45–47)</h2>
+
+  <div class="qb"><div class="qh"><span class="qn">Q45</span><span class="qt">What automated flush and compressed-air purge sequence?</span></div><div class="why">Residual chemistry affects next batch and contributes to deposits/blockages.</div><div class="ans"><p><strong>Step 1:</strong> P-101 off, XV-101 close (dose target reached). <strong>Step 2:</strong> Carrier continues at 7.0 L/h for up to 5 min → flushes H-1, quill, MX-201, and nozzle manifold. AIT-201 monitors concentration. <strong>Step 3:</strong> Flush ends when AIT-201 &lt;50 mg/L AND FT-201 stable for 60 s, OR after 5 min timer — whichever comes first. <strong>Step 4:</strong> Carrier and zone liquid valves close. <strong>Step 5:</strong> Air blowdown — zone air solenoids (XV-AA, XV-AB) remain open at 3.0 barg for 60 s, clearing all liquid from nozzle orifices. <strong>Step 6:</strong> All zone solenoids close. Compressor continues to maintain receiver pressure. Batch record closed.</p></div></div>
+
+  <div class="qb"><div class="qh"><span class="qn">Q46</span><span class="qt">How will the system prove residual chemistry is below agreed endpoint?</span></div><div class="why">"Flush completed" is not the same as "system clean".</div><div class="ans"><p>Primary: AIT-201 reading &lt;50 mg/L in the mixed-stream sample loop. This corresponds to approximately 0.0005% w/w — below any meaningful treatment-level concentration. Endpoint must also be confirmed by FT-201 flow being stable (flush water, not residual PAA slug, flowing). If AIT-201 is out of service: draw 50 mL sample from the drain valve at the manifold, titrate with permanganate method; accept if &lt;50 mg/L. FAT demonstration: run a normal batch stop and measure time from P-101 off to AIT-201 &lt;50 mg/L. This becomes the design-basis flush duration and must be achieved within the 5 min timer.</p></div></div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q47</span><span class="qt">Which components are most vulnerable to residue/crystallisation and how will they be maintained?</span></div>
+    <div class="why">Informs reliability, inspection and spare-parts strategy.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Component</th><th>Risk</th><th>Mechanism</th><th>Inspection</th><th>Action at limit</th></tr></thead>
+        <tbody>
+          <tr><td>AKIMist nozzle orifices (×8)</td><td><span class="bc">HIGHEST</span></td><td>PAA crystallisation on 0.3–0.5 mm bore if air blowdown incomplete</td><td>Weekly visual; monthly flow test</td><td>Soak in dilute acetic acid 15 min; replace if flow still outside ±10%</td></tr>
+          <tr><td>MX-201 static mixer</td><td><span class="bw">HIGH</span></td><td>PAA deposits in element gaps if not flushed immediately after batch</td><td>Measure dP across mixer at FAT; re-check at SAT. Inspect 3-monthly.</td><td>Replace if dP &gt; 0.3 bar above baseline. Carry one spare.</td></tr>
+          <tr><td>PTFE hose H-1</td><td><span class="bw">MEDIUM</span></td><td>PAA deposits invisible on PTFE interior; not detectable by visual inspection</td><td>Flow test monthly (gravimetric, 5 min at design setpoint vs. baseline)</td><td>Replace if flow drops &gt;5% below baseline. Carry one spare.</td></tr>
+          <tr><td>FCV-201 micro-orifice</td><td><span class="bw">MEDIUM</span></td><td>Fine crystalline deposits in Cv ≈ 0.01 orifice from carrier-side minerals if back-siphon occurs</td><td>Flush with clean water at each batch end (handled by flush sequence). Inspect quarterly.</td><td>Clean with soft brush + water; replace if Cv shifts &gt;20% from baseline.</td></tr>
+          <tr><td>FT-101/201 Coriolis meters</td><td><span class="bp">LOW</span></td><td>PAA deposits on tube interior if standing time &gt;24 h without flush</td><td>Annual flow verification (gravimetric)</td><td>Backflush with clean water if deposit suspected</td></tr>
+          <tr><td>P-101 diaphragm</td><td><span class="bp">LOW</span></td><td>PAA attack on PTFE diaphragm over time</td><td>6-monthly disassembly inspection per pump OEM</td><td>Replace diaphragm annually as preventative; carry two spares</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STAGE 10 ── -->
+<section id="s10">
+  <h2 class="sh"><span class="n">S10</span>Stage 10 — SAT and Real Treatment Environment (Q48–52)</h2>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q48</span><span class="qt">Which FAT measurements should be repeated at SAT?</span></div>
+    <div class="why">Site piping, air supply, manifold geometry and installation can change the operating point.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>FAT measurement</th><th>SAT repeat method</th><th>Acceptance at SAT</th></tr></thead>
+        <tbody>
+          <tr><td>Carrier pressure stability</td><td>PT-201 trend during zone switch</td><td>Within ±0.3 bar (relaxed from ±0.2 — site piping adds losses)</td></tr>
+          <tr><td>Dosing accuracy (P-101)</td><td>Gravimetric at nominal setpoint only</td><td>Within ±3% (relaxed from ±2%)</td></tr>
+          <tr><td>Nozzle zone flow</td><td>Gravimetric catch per zone, 10 min</td><td>Within ±10% of FAT reference</td></tr>
+          <tr><td>Air header pressure</td><td>PT-202 at design point</td><td>3.0 ± 0.3 barg</td></tr>
+          <tr><td>E-stop response</td><td>Stopwatch or data logger</td><td>&lt;100 ms (relaxed from &lt;50 ms for site wiring)</td></tr>
+          <tr><td>AIT-201 vs. titration</td><td>Draw 3 grab samples, titrate</td><td>AIT-201 within ±15% of titration result</td></tr>
+          <tr><td>Flush endpoint</td><td>AIT-201 reading after normal stop</td><td>AIT-201 &lt;50 mg/L within 8 min (relaxed from 5 — site piping adds volume)</td></tr>
+          <tr><td>Repeatability (1 cycle)</td><td>One full 50 mg/L batch</td><td>Delivered mass within ±5% of FAT reference</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="qb"><div class="qh"><span class="qn">Q49</span><span class="qt">How will installed nozzle performance be verified?</span></div><div class="why">Production configuration is the installed system, not the workshop setup.</div><div class="ans"><p>Zone gravimetric collection (one catch tray per zone, minimum 10 min run at design conditions). Compare zone-level mass to FAT reference. Accept if within ±10% of FAT result. If outside: check manifold connections for leaks, confirm air-side connections, verify PCV-202 is set to 3.0 barg locally, re-run. Individual nozzle gravimetric test at SAT is optional — it is recommended for the first installation but can be simplified to zone-level on subsequent sites.</p></div></div>
+
+  <div class="qb"><div class="qh"><span class="qn">Q50</span><span class="qt">How will Tecpro test the skid against actual treatment geometry and airflow environment?</span></div><div class="why">Final outcome is a coupled skid + enclosure + stockpile system.</div><div class="ans"><p>Suggested representative geometry test before first live batch: prepare a surrogate enclosure (tarpaulin or equivalent) of representative volume (minimum 12 m³, i.e., half scale). Run one batch with 0.5% w/w PAA at scaled-down dose (0.625 kg target). Place PAA indicator strips or passive samplers at 8 grid points inside the enclosure. Confirm that all 8 points show PAA presence within 30 min of batch start. This is not a quantitative headspace measurement — it establishes spatial coverage. First full-scale live batch (30-tonne grain pile) should use PAA test strips at multiple pile penetration depths to confirm distribution before accepting the system.</p></div></div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q51</span><span class="qt">What design inputs does Tecpro require before final nozzle/manifold sizing?</span></div>
+    <div class="why">Nozzle selection must be based on actual duty and geometry.</div>
+    <div class="ans">
+      <div class="tw"><table>
+        <thead><tr><th>Input required</th><th>Value from this design</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Total liquid flow to nozzles</td><td>19.2 L/h (8 nozzles × 2.4 L/h)</td><td><span class="bp">CONFIRMED</span></td></tr>
+          <tr><td>Liquid pressure at nozzle inlet</td><td>3.0 barg</td><td><span class="bp">CONFIRMED</span></td></tr>
+          <tr><td>Air pressure at nozzle inlet</td><td>3.0 barg</td><td><span class="bp">CONFIRMED</span></td></tr>
+          <tr><td>Liquid composition</td><td>1.5% w/w PAA in water, density ~1.01 kg/L</td><td><span class="bw">H01 OPEN — assay to confirm</span></td></tr>
+          <tr><td>Target droplet size</td><td>Dv90 &lt;10 µm</td><td><span class="bp">CONFIRMED</span></td></tr>
+          <tr><td>Nozzle count and zone layout</td><td>8 nozzles, 2 zones of 4</td><td><span class="bp">CONFIRMED</span></td></tr>
+          <tr><td>Treatment enclosure volume</td><td>25,000 L (void) — geometry TBD by T3</td><td><span class="bw">OPEN — T3 to provide enclosure drawing</span></td></tr>
+          <tr><td>Nozzle mounting geometry</td><td>Boom arm, spacing TBD — T3/site to advise</td><td><span class="bw">OPEN — T3 to provide mounting arrangement</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="qb">
+    <div class="qh"><span class="qn">Q52</span><span class="qt">What three measurements does Tecpro regard as most important for proving commissioning?</span></div>
+    <div class="why">Forces prioritisation of the variables that genuinely govern outcome.</div>
+    <div class="ans">
+      <p>From this design's perspective, the three measurements that must be proven at commissioning — because they are the minimal set that confirms the treatment chain is working end-to-end:</p>
+      <p><strong>1. Delivered PAA mass per batch</strong> (FT-101 integrated, verified gravimetrically against TK-101 pre/post weight). This is the fundamental proof that the correct dose was delivered — regardless of what headspace concentration is subsequently achieved.</p>
+      <p><strong>2. Droplet Dv90 at the installed configuration</strong> (laser diffraction at SAT, or equivalent surrogate evidence from FAT + zone-flow correlation). This confirms the aerosol is in the treatment-effective size range — without this, the PAA dose reaches the void air but may not remain suspended long enough for a 6-hour contact.</p>
+      <p><strong>3. Flush endpoint PAA concentration</strong> (AIT-201 or titration). This confirms the system is clean before the next batch, which is the difference between a reliable batch process and a contaminated one that carries treatment chemistry across from one batch to the next.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── DECISION GATES ── -->
+<section id="gates">
+  <h2 class="sh"><span class="n">DG</span>Decision Gates — Confirmed from Questionnaire Stages</h2>
+  <div class="tw"><table>
+    <thead><tr><th>Gate</th><th>Proceed when…</th><th>Hold / redesign when…</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Carrier delivery</td><td>PT-201 ±0.2 bar, FT-201 ±2% at design point</td><td>Tecpro cannot demonstrate stable flow at 7 L/h without cavitation</td><td>FAT Phase 1 trend</td></tr>
+      <tr><td>Chemical dosing</td><td>FT-101 ±2% at 25%, 50%, 100% setpoints</td><td>Concentration cannot be independently verified by AIT-201</td><td>Gravimetric + AIT-201 FAT Phase 2</td></tr>
+      <tr><td>Atomisation</td><td>Dv90 &lt;10 µm measured by laser diffraction</td><td>Only catalogue claims support performance; no measured data at PAA formulation</td><td>Laser diffraction FAT Phase 3</td></tr>
+      <tr><td>Manifold</td><td>Nozzle-to-nozzle CV ≤ 5%</td><td>Any nozzle &gt;10% from mean after replacement attempt</td><td>Individual nozzle gravimetric FAT</td></tr>
+      <tr><td>Chemistry</td><td>≥95% PAA recovery pre/post train</td><td>Any measured PAA loss &gt;5% without identified cause</td><td>Titration FAT Phase 3</td></tr>
+      <tr><td>Controls</td><td>All 7 fault-injection tests pass within specified response times</td><td>Any critical protection function relies on operator action alone</td><td>Fault injection FAT Phase 1/2</td></tr>
+      <tr><td>Repeatability</td><td>Delivered mass within ±3% across 3 consecutive nominal batches</td><td>Batch-to-batch drift exceeds ±3%</td><td>FAT Phase 3 × 3 runs</td></tr>
+      <tr><td>70-bar hydraulic rejection</td><td>Dv90 &lt;10 µm AND ≥95% chemical recovery demonstrated with PAA</td><td>Either criterion fails — two-fluid architecture is confirmed basis. No renegotiation.</td><td>Laser diffraction + titration test</td></tr>
+      <tr><td>SAT readiness</td><td>All FAT blocks passed; calibration certs current; operators trained</td><td>Any open FAT NCR unresolved</td><td>FAT sign-off sheet</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="ca cp" style="margin-top:24px">
+    <strong>Commercial principle (from questionnaire closing position):</strong> Tecpro is free to propose the technical solution, but acceptance is conditional on measured performance against the agreed FAT criteria above. The criteria in this document are T3's opening position for negotiation with Tecpro. Any criterion that Tecpro proposes to change must be supported by technical justification — not commercial preference.
+  </div>
+</section>
+
+</main>
+<script>
+const secs=document.querySelectorAll('section[id]');
+const lnks=document.querySelectorAll('nav a');
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){lnks.forEach(l=>l.classList.remove('on'));const a=document.querySelector('nav a[href="#'+x.target.id+'"]');if(a)a.classList.add('on')}})},{rootMargin:'-25% 0px -65% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+</body>
+</html>

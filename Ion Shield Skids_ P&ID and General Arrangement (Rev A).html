@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ion Shield Skids: P&ID and General Arrangement (Rev A)</title>
+<style>
+:root{--bg:#f6f7f9;--fg:#1b2430;--card:#fff;--line:#5b6b7d;--muted:#8794a3;--liq:#1f6feb;--air:#12866f;--chem:#d9730d;--warn:#b42318;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f141a;--fg:#e6ebf1;--card:#18202a;--line:#8fa0b3;--muted:#6f7f91;--liq:#5aa2ff;--air:#3cc9a8;--chem:#ffa04d;--warn:#ff7b6e}}
+:root[data-theme="dark"]{--bg:#0f141a;--fg:#e6ebf1;--card:#18202a;--line:#8fa0b3;--muted:#6f7f91;--liq:#5aa2ff;--air:#3cc9a8;--chem:#ffa04d;--warn:#ff7b6e}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;padding:16px}
+main{max-width:1040px;margin:0 auto}
+h1{font-size:1.35rem;margin:.2rem 0}h2{font-size:1.05rem;margin:1.6rem 0 .4rem}
+p,li{max-width:80ch}.sub{color:var(--muted);margin:0 0 .8rem}
+.wrap{overflow-x:auto;background:var(--card);border:1px solid var(--muted);border-radius:8px;padding:6px}
+svg{display:block;min-width:760px;width:100%;height:auto}
+.bx{fill:var(--card);stroke:var(--line);stroke-width:1.2}.tx{fill:var(--fg);font:10px system-ui,Arial,sans-serif}
+.ins{fill:var(--fg);font:7.5px system-ui,Arial,sans-serif}.hd{fill:var(--fg);font:bold 12px system-ui,Arial,sans-serif}
+.fr{fill:none;stroke:var(--line);stroke-width:1.5}.dash{stroke-dasharray:5 4}.mut{fill:var(--muted);font:10px system-ui,Arial,sans-serif}
+.ln{fill:none;stroke-width:2}.chem{stroke:var(--chem)}.liq{stroke:var(--liq)}.air{stroke:var(--air)}.sig{stroke:var(--muted);stroke-dasharray:3 3;stroke-width:1.2}
+.pk{fill:var(--muted)}.warn{color:var(--warn)}
+</style><script type='text/javascript' nonce='5obQ66+8j+253hqelq3oPw==' src='https://adadb589-316e-4e73-b3ce-bc1708bf6131.frame.claudeusercontent.com/CCicSNdwZafsC51h4jEt71RcNef_aP7hzWsP2L-Mt5F1VFjZUwIq1AvzDfFWLC01iWm5TqVQRIRogETiMSwSS7zEvc6ts8obn7qVKOBh47NUE95GUvOG1qQIKoNbqeMhjEP4Ouyh23OLB6LeDUxgHPXGqIw2EM68zm4tP-4ID6w1kI_QP0rCEPtGyiWsNwvoMZBygGuu0qm94FUQ6eAiXFjxHITWVX1mb1p2RcOwvKHwmANut0qgK4c4nrrZGQ0hcvTi19WBQLB2F6121Pay_-CGCeKC86QMdrLKT1GwdW7IfGzHv-f88oTKKOLW0kWSvH2UdE-kaDd93Ho8S3AH8pwQXBMij2EyO_4V41BsE1IGYJWXC9Mhk6fl1ZXym5F-d2Jpeh7_u9w-4o9TN2mkTDCtvOakWFF4mvvTx-NWxANj7BXhq6_xL9jpbsZ8mBxYrD1hrqxD5pJc3Gicq-12k4y4rJovybtSP6dvfyWsgD05RQRBa2yZgYycMOCXIKYJX5feik2YH3KOy0CXYQMxgaw-psmb-qSD3vdn7GynvJQ0bCL4Bsky4G65wkgx7IOPTJ2L5zcCFIGVC5icySu_aS7sL5ca3ZpKZDfJlnrq4V3ybeghWP-vrdgPZay-StGbiTzbi6OkmfvrhUtC3WqVy6bC2Lfx3rqfYdaQwrWCy2YASv0HOGw48MVWS7FxWu-K5zAk0JXeYXLmmgDSLDMR2Q'></script></head><body><main>
+<h1>Ion Shield Pilot: Skid 101 / Skid 201</h1>
+<p class="sub">Conceptual P&amp;ID and general arrangement, Rev A. Not for fabrication. Basis: BOM01 and Engineering Validation Report: 12.2 L/h stock + 7.0 L/h carrier = 19.2 L/h to 8 × AKIMist 03C TN; air 232 NL/min at 3.0 bar; 50 mg/L target.</p>
+
+<h2>1. Preliminary P&amp;ID</h2>
+<div class="wrap"><svg id="pid" viewbox="0 0 1000 540" role="img" aria-label="Preliminary P&amp;ID"></svg></div>
+<ul>
+<li><b>Loops:</b> FIC-101 holds stock flow. FIC-201 sets carrier = 19.2 − FT-101. PIC-202 holds air at 3.0 bar. The outer dose controller integrates delivered PAA mass and ends the run at target. AIT-201 verifies and trims only.</li>
+<li><b>Pressure ladder (chemical side):</b> normal ≈ 3.6-4.0 barg, PAH 4.5, PSHH-101 trip 5.0, PSV-101 5.5, boundary 6 barg. Air header PSV-202 5.0 barg.</li>
+<li><b>Shutdown:</b> P-101 off, carrier flushes 2-5 min at nozzle-limited flow (≈0.3 L/min), then 60 s air blowdown. Trips: PSHH, air &lt; 2.5 bar, dry-run, bund leak, comms loss, E-stop.</li>
+</ul>
+
+<h2>2. General arrangement (plan view, to scale)</h2>
+<div class="wrap"><svg id="ga" viewbox="0 0 900 430" role="img" aria-label="General arrangement plan"></svg></div>
+<ul>
+<li>Envelopes are assumptions: Skid 101 ≈ 1.5 × 1.0 m, Skid 201 ≈ 2.2 × 1.0 m. Tank and compressor sit low; PAA pipework stays above the bund and clear of the panel.</li>
+<li>Panels face the service side with 600 mm clearance. Utilities enter at one boundary point per skid. Forklift pockets and corner tie-downs are on both skids.</li>
+<li class="warn">Not yet done: structural and lifting checks, electrical load schedule, vendor-confirmed dimensions and weights.</li>
+</ul>
+</main>
+<script>
+function box(x,y,w,h,l,c){var n=l.split('|'),y0=y+h/2-(n.length-1)*6+4;return '<rect class="bx '+(c||'')+'" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4"/><text class="tx" text-anchor="middle">'+n.map(function(s,i){return '<tspan x="'+(x+w/2)+'" y="'+(y0+i*12)+'">'+s+'</tspan>'}).join('')+'</text>'}
+function ln(p,c,nm){return '<polyline class="ln '+c+'" points="'+p.map(function(a){return a.join(',')}).join(' ')+'"'+((c==='sig'||nm)?'':' style="marker-end:url(#ar)"')+'/>'}
+function ins(x,y,t){var n=t.split('|');return '<circle class="bx" cx="'+x+'" cy="'+y+'" r="13"/><text class="ins" text-anchor="middle"><tspan x="'+x+'" y="'+(y-1)+'">'+n[0]+'</tspan><tspan x="'+x+'" y="'+(y+8)+'">'+n[1]+'</tspan></text>'}
+function tx(x,y,t,c,a){return '<text class="'+(c||'mut')+'" x="'+x+'" y="'+y+'"'+(a?' text-anchor="'+a+'"':'')+'>'+t+'</text>'}
+var s='<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8z" style="fill:var(--line)"/></marker></defs>';
+s+='<rect class="fr" x="10" y="40" width="380" height="230"/>'+tx(20,58,'SKID 101 · DOSING','hd');
+s+='<rect class="fr" x="410" y="40" width="580" height="480"/>'+tx(420,58,'SKID 201 · ATOMISATION','hd');
+s+=box(20,80,70,60,'TK-101|100 L|1.5% RTU')+box(115,90,60,40,'P-101|meter pump')+box(240,90,60,40,'FT-101|Coriolis')+box(315,95,40,30,'XV-101');
+s+=ln([[90,110],[115,110]],'chem')+ln([[175,110],[240,110]],'chem')+ln([[300,110],[315,110]],'chem');
+s+=ln([[355,110],[380,110],[380,175],[910,175],[910,130]],'chem')+tx(560,168,'H-1 PTFE hose 10-25 m (PAA stock)');
+s+=ln([[190,110],[190,205]],'chem',1)+box(150,205,90,28,'PSV-101 5.5 barg')+ln([[150,219],[55,219],[55,140]],'chem');
+s+=ln([[215,110],[215,146]],'sig')+ins(215,160,'PT|101')+ln([[90,125],[105,125],[105,152]],'sig')+ins(105,165,'LT|101');
+s+=box(425,80,70,50,'WBT-201|200 L|air gap')+box(520,80,110,50,'Tecpro multistage|4.5 bar, VFD PID')+box(655,80,60,50,'FCV-201')+box(740,80,60,50,'FT-201|Coriolis')+box(840,80,130,50,'Quill + check|MX-201 mixer');
+s+=ln([[413,118],[425,118]],'liq')+tx(415,147,'water in')+ln([[495,105],[520,105]],'liq')+ln([[630,105],[655,105]],'liq')+ln([[715,105],[740,105]],'liq')+ln([[800,105],[840,105]],'liq');
+s+=ln([[642,105],[642,147]],'sig')+ins(642,160,'PT|201');
+s+=ln([[970,105],[982,105],[982,240],[850,240]],'liq',1)+ln([[850,240],[720,240]],'liq',1);
+s+=box(880,190,95,30,'AIT-201 (sample)')+ln([[927,220],[927,240]],'sig');
+s+=ln([[720,240],[720,262]],'liq',1)+ln([[850,240],[850,262]],'liq',1)+box(698,262,44,25,'XV-201A')+box(828,262,44,25,'XV-201B')+ln([[720,287],[720,320]],'liq')+ln([[850,287],[850,320]],'liq');
+s+=box(660,320,120,50,'Bank A|4 × 03C TN')+box(790,320,120,50,'Bank B|4 × 03C TN');
+s+=box(425,455,70,50,'P-202|compressor')+box(510,455,70,50,'Receiver|100-200 L')+box(595,455,80,50,'Filter + dryer|0.01 µm')+box(690,455,75,50,'PCV-202|3.0 barg');
+s+=ln([[495,480],[510,480]],'air')+ln([[580,480],[595,480]],'air')+ln([[675,480],[690,480]],'air')+ln([[765,480],[800,480],[800,420]],'air',1)+box(778,440,44,22,'FT-204');
+s+=ln([[720,420],[850,420]],'air',1)+ln([[720,420],[720,403]],'air',1)+ln([[850,420],[850,403]],'air',1)+box(698,383,44,20,'XV-204A')+box(828,383,44,20,'XV-204B')+ln([[720,383],[720,370]],'air')+ln([[850,383],[850,370]],'air');
+s+=ln([[850,420],[880,420]],'air',1)+box(880,406,100,28,'PSV-202 5.0 barg');
+s+=box(425,215,200,55,'S7-1500F master PLC|KTP700 HMI · PROFINET|hardwired ESD 24 VDC');
+s+=tx(20,305,'Legend','hd')+ln([[20,325],[60,325]],'chem',1)+tx(68,329,'PAA stock')+ln([[20,345],[60,345]],'liq',1)+tx(68,349,'Water / mixed liquid')+ln([[20,365],[60,365]],'air',1)+tx(68,369,'Compressed air')+ln([[20,385],[60,385]],'sig')+tx(68,389,'Signal / sample');
+document.getElementById('pid').innerHTML=s;
+
+var g='',k=0;
+function skid(x,w,t){var o='<rect class="fr" x="'+x+'" y="60" width="'+w+'" height="220"/>'+tx(x+6,40,t,'hd');[[x+8,68],[x+w-8,68],[x+8,272],[x+w-8,272]].forEach(function(c){o+='<circle class="bx" cx="'+c[0]+'" cy="'+c[1]+'" r="5"/>'});[x+w*0.2,x+w*0.75].forEach(function(px){o+='<rect class="pk" x="'+px+'" y="55" width="16" height="8"/><rect class="pk" x="'+px+'" y="277" width="16" height="8"/>'});o+='<rect class="fr dash" x="'+x+'" y="280" width="'+w+'" height="132"/>'+tx(x+6,404,'600 mm service clearance');return o}
+g+=skid(20,330,'SKID 101 · ≈1.5 × 1.0 m')+skid(400,484,'SKID 201 · ≈2.2 × 1.0 m');
+g+='<rect class="fr dash" x="30" y="80" width="176" height="176"/>'+tx(34,250,'bund ≥110% of 100 L')+box(58,108,120,120,'TK-101|100 L');
+g+=box(225,80,60,40,'P-101')+box(295,80,45,40,'FT-101')+box(225,135,115,45,'PSV / XV / PT-101')+box(230,205,110,60,'Panel|500 × 400');
+g+=ln([[350,110],[400,110]],'chem')+tx(360,102,'H-1');
+g+=box(410,72,100,100,'WBT-201|200 L')+box(410,185,100,85,'Tecpro|multistage|+ VFD')+'<rect class="fr dash" x="520" y="68" width="40" height="204"/><text class="mut" transform="rotate(-90 544 170)" x="544" y="170" text-anchor="middle">pipe rack</text>';
+g+=box(575,72,130,80,'P-202|compressor')+box(720,72,110,50,'Filter/dryer|PCV-202')+box(575,165,150,60,'Receiver')+box(740,135,100,60,'MX-201|AIT-201|zone valves')+box(740,205,105,65,'Panel|IP65');
+g+='<rect class="bx" x="850" y="72" width="28" height="198"/><text class="tx" transform="rotate(-90 868 171)" x="868" y="171" text-anchor="middle">nozzle manifold / boundary</text>';
+g+=tx(406,300,'Utilities at boundary: water suction · 3-phase · site air (optional)');
+document.getElementById('ga').innerHTML=g;
+</script></body></html>

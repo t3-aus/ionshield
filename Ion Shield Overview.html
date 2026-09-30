@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ion Shield — Closed-Loop Skid Design Package</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #EEF1F5;
+  --surface: #FFFFFF;
+  --border: #C8D4E0;
+  --border-light: #DDE5EE;
+  --ink: #1A2B3C;
+  --ink-2: #4A6070;
+  --ink-3: #8099B0;
+  --blue: #1558A0;
+  --pass: #1A7A48;
+  --pass-bg: #E6F5EE;
+  --warn: #A05C00;
+  --warn-bg: #FFF3DC;
+  --crit: #A01818;
+  --crit-bg: #FDEAEA;
+  --open: #6040A0;
+  --open-bg: #F2EEFF;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --nav-w: 220px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; scroll-padding-top: 72px; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.65; }
+
+/* ── NAV ── */
+nav { position: fixed; top: 0; left: 0; width: var(--nav-w); height: 100vh; background: #0F1E2E; color: #C8D8E8; overflow-y: auto; padding: 28px 0 40px; z-index: 100; }
+nav h2 { font-family: var(--mono); font-size: .68rem; color: #5A7890; letter-spacing: .06em; padding: 0 20px 12px; border-bottom: 1px solid #1E3348; margin-bottom: 12px; }
+nav a { display: block; padding: 6px 20px; font-size: .78rem; color: #A0B8CC; text-decoration: none; border-left: 3px solid transparent; transition: all .15s; }
+nav a:hover, nav a.active { color: #E8F0F8; border-left-color: #3A8FD4; background: #1A2E42; }
+nav .section-label { font-family: var(--mono); font-size: .62rem; color: #3A5870; padding: 18px 20px 4px; letter-spacing: .08em; }
+
+/* ── MAIN ── */
+main { margin-left: var(--nav-w); padding: 0 0 80px; }
+
+/* ── HEADER ── */
+header { background: #0F1E2E; color: #E8F0F8; padding: 40px 52px 36px; border-bottom: 3px solid #1A6BBF; }
+header .eyebrow { font-family: var(--mono); font-size: .7rem; color: #5A90C0; letter-spacing: .1em; margin-bottom: 10px; }
+header h1 { font-size: 1.7rem; font-weight: 300; line-height: 1.25; margin-bottom: 6px; }
+header h1 strong { font-weight: 600; }
+.meta-row { display: flex; gap: 32px; margin-top: 18px; flex-wrap: wrap; }
+.meta-item { font-family: var(--mono); font-size: .72rem; }
+.meta-item span { color: #5A90C0; display: block; margin-bottom: 2px; }
+.badge { display: inline-block; background: #1A3A5A; border: 1px solid #2A6090; border-radius: 3px; font-family: var(--mono); font-size: .65rem; padding: 2px 8px; margin-right: 6px; color: #7ABADF; }
+
+/* ── SECTIONS ── */
+section { padding: 44px 52px 36px; border-bottom: 1px solid var(--border-light); max-width: 1060px; }
+h2.sec-head { font-size: 1.05rem; font-weight: 600; color: #0F1E2E; border-left: 4px solid #1558A0; padding-left: 14px; margin-bottom: 22px; display: flex; align-items: baseline; gap: 12px; }
+h2.sec-head .num { font-family: var(--mono); font-size: .72rem; color: var(--blue); }
+h3 { font-size: .9rem; font-weight: 600; margin: 24px 0 10px; color: #1A2B3C; }
+p { margin-bottom: .9em; max-width: 72ch; }
+p:last-child { margin-bottom: 0; }
+
+/* ── TABLES ── */
+.tbl-wrap { overflow-x: auto; margin: 16px 0; border-radius: 4px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+th { background: #1A2B3C; color: #C8D8E8; font-family: var(--mono); font-weight: 400; font-size: .7rem; padding: 10px 14px; text-align: left; letter-spacing: .03em; white-space: nowrap; }
+td { padding: 9px 14px; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) { background: #F6F8FB; }
+td code { font-family: var(--mono); font-size: .75rem; background: #E8EEF5; padding: 1px 5px; border-radius: 2px; color: #1558A0; }
+
+/* ── STATUS BADGES ── */
+.badge-pass { background: var(--pass-bg); color: var(--pass); font-family: var(--mono); font-size: .68rem; padding: 2px 8px; border-radius: 2px; font-weight: 600; white-space: nowrap; }
+.badge-warn { background: var(--warn-bg); color: var(--warn); font-family: var(--mono); font-size: .68rem; padding: 2px 8px; border-radius: 2px; font-weight: 600; white-space: nowrap; }
+.badge-crit { background: var(--crit-bg); color: var(--crit); font-family: var(--mono); font-size: .68rem; padding: 2px 8px; border-radius: 2px; font-weight: 600; white-space: nowrap; }
+.badge-open { background: var(--open-bg); color: var(--open); font-family: var(--mono); font-size: .68rem; padding: 2px 8px; border-radius: 2px; font-weight: 600; white-space: nowrap; }
+.badge-sel { background: #E0F0FF; color: #0A508A; font-family: var(--mono); font-size: .68rem; padding: 2px 8px; border-radius: 2px; font-weight: 600; white-space: nowrap; }
+.badge-rej { background: #F0E0E0; color: #800000; font-family: var(--mono); font-size: .68rem; padding: 2px 8px; border-radius: 2px; font-weight: 600; white-space: nowrap; }
+
+/* ── CALLOUT BOXES ── */
+.callout { border-left: 4px solid; border-radius: 0 4px 4px 0; padding: 14px 18px; margin: 18px 0; font-size: .85rem; }
+.callout.crit { border-color: var(--crit); background: var(--crit-bg); }
+.callout.warn { border-color: var(--warn); background: var(--warn-bg); }
+.callout.info { border-color: var(--blue); background: #EEF4FF; }
+.callout.pass { border-color: var(--pass); background: var(--pass-bg); }
+.callout strong { font-weight: 600; }
+
+/* ── CALC BLOCK ── */
+.calc { background: #0F1E2E; color: #B0D0E8; font-family: var(--mono); font-size: .75rem; padding: 18px 22px; border-radius: 4px; line-height: 1.85; margin: 14px 0; overflow-x: auto; }
+.calc .label { color: #5A90C0; }
+.calc .val { color: #78DFA8; }
+.calc .err { color: #FF8080; }
+.calc .ok { color: #78DFA8; }
+
+/* ── PFD ── */
+.pfd-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 28px; margin: 18px 0; overflow-x: auto; }
+pre.mermaid { text-align: center; }
+
+/* ── GA SVG ── */
+.ga-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 24px; margin: 18px 0; overflow-x: auto; }
+.ga-label { font-family: var(--mono); font-size: .68rem; }
+
+/* ── CONTROL LOOP ── */
+.loop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 16px 0; }
+.loop-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 16px; }
+.loop-card .lc-title { font-family: var(--mono); font-size: .75rem; color: var(--blue); font-weight: 600; margin-bottom: 8px; }
+.loop-card p { font-size: .8rem; margin-bottom: 0; max-width: none; }
+
+/* ── SEQ ── */
+.seq { counter-reset: seq; }
+.seq-step { display: grid; grid-template-columns: 36px 1fr; gap: 0 14px; margin-bottom: 14px; }
+.seq-step::before { counter-increment: seq; content: counter(seq); background: #1558A0; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: .72rem; font-weight: 600; flex-shrink: 0; margin-top: 2px; }
+.seq-step-body strong { display: block; font-size: .85rem; margin-bottom: 3px; }
+.seq-step-body p { font-size: .8rem; color: var(--ink-2); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { width: 100%; height: auto; position: relative; }
+  main { margin-left: 0; }
+  section { padding: 28px 20px; }
+  header { padding: 28px 20px; }
+}
+
+/* ── PRINT ── */
+@media print {
+  nav { display: none; }
+  main { margin-left: 0; }
+  .pfd-wrap, .ga-wrap { page-break-inside: avoid; }
+}
+</style>
+<script type='text/javascript' nonce='EyJjqcJjzJT1lrO2NX5sRw==' src='https://d1db0089-70e1-402a-b6b5-00bad6199fbb.frame.claudeusercontent.com/9hGXlPNkdshfj5k66lT8ctlZ8mbjvLRYCNhse3cRgSijtId6rNkDX7oaVIgMpUqEYCBgh0KzxvxuXo5mVyipkFfRt3kHrBHNcvHv5jU18J9mXiPH5gunXLgG6kw7IORZhtf0AYZCvybAWy64VMdO9hfwdSNlgP-96XlrOgNeIQYw3FNxCj5rcHQA7vZckMIJ7q79sfRgIWCV5qU_-c3R9DC6PV_EUenRoO2wN0kq0oqAc_pznGMPzA77C0rBLnveYCcE_T4vrbUru1sC8Uh3L93YZv_PzmBkgTVJMclrYf3vsgV6YuCWLqeHtIcLd8_JXIijhTO83Qmn7Nnt0UacD1K-xf5FXzzcNxt04cvuXSpyqjrw27Ivw7a5BoCspHd93Zmd9UMipY9l4hRNi8ru2XdmZnjrAluAGQIrgWcfyAsBh3WtLsApvNsHWpe440WuN_s5L4VUTTUCVDeqn8go5rets6b_EA6nXpvyjlAwrlsVV0zU8xY1FQp3PYHcFfk-1IauQUiCrH9VzA1XMvzBX9dM3QUvR3JBFtiCgGtMbtIed7IfnmGZtUB21UggljjYVBnA8hckM_dU_vQ1JQAnmGVjmwuDIdm2gYTadH3GI6TcRb6neN7bKRnZNd8fm2oK1sJTS_CqEgkYyjcyeUY3gXQ5DyWxrMRcUDcD8gKp0NudCW5h5561E-mkt2Nte8TNBgW666VgWjujSarY5obswg'></script></head>
+<body>
+
+<nav>
+  <h2>ION SHIELD DESIGN</h2>
+  <div class="section-label">DOCUMENT</div>
+  <a href="#design-basis">1 · Design Basis</a>
+  <a href="#corrections">2 · EVR Corrections</a>
+  <a href="#equipment">3 · Equipment Assessment</a>
+  <a href="#mass-balance">4 · Mass Balance</a>
+  <a href="#pfd">5 · Process Flow</a>
+  <a href="#control">6 · Control Architecture</a>
+  <a href="#pid">7 · P&ID Narrative</a>
+  <a href="#ga">8 · General Arrangement</a>
+  <a href="#interconnect">9 · Interconnections</a>
+  <a href="#sequence">10 · Operating Sequence</a>
+  <a href="#gaps">11 · Gap & Hold Register</a>
+</nav>
+
+<main>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="eyebrow">ION SHIELD BIOSECURITY SYSTEM · ENGINEERING DESIGN PACKAGE</div>
+  <h1><strong>Closed-Loop Dosing & Atomisation Skids</strong><br>Conceptual Design — Rev A</h1>
+  <div class="meta-row">
+    <div class="meta-item"><span>Date</span>29 September 2026</div>
+    <div class="meta-item"><span>Primary basis</span>BOM_CHANGES_IMPACT_RANKED + ENGINEERING_VALIDATION_REPORT (24 Sep 2026)</div>
+    <div class="meta-item"><span>Status</span><span class="badge">Design Development</span><span class="badge">Not for Fabrication</span></div>
+  </div>
+</header>
+
+<!-- ── 1 DESIGN BASIS ── -->
+<section id="design-basis">
+  <h2 class="sec-head"><span class="num">01</span>Design Basis — Confirmed from BOM + EVR</h2>
+
+  <div class="callout info">
+    <strong>Scale confirmation:</strong> This package is based on the pilot-scale numbers from the BOM and Engineering Validation Report — not the Background Scope document (which lists water 10–50 L/min, air 50–200 Nm³/h). The pilot basis governs all sizing below.
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Parameter</th><th>Value</th><th>Unit</th><th>Source</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>PAA stock concentration (TK-101)</td><td><code>1.5% w/w</code></td><td>—</td><td>15% Jet-Ag diluted 10× on-site</td><td><span class="badge-pass">CONFIRMED EVR §1</span></td></tr>
+        <tr><td>Stock density</td><td><code>1.14</code></td><td>kg/L</td><td>Jet-Ag product data</td><td><span class="badge-warn">HOLD H01 — assay unconfirmed</span></td></tr>
+        <tr><td>Headspace PPM target</td><td><code>50</code></td><td>mg/L</td><td>Seasonal standard</td><td><span class="badge-warn">HOLD H08 — efficacy not validated</span></td></tr>
+        <tr><td>Treatment void volume</td><td><code>25,000</code></td><td>L</td><td>62.5 m³ bed × 40% porosity</td><td><span class="badge-pass">CONFIRMED EVR §1</span></td></tr>
+        <tr><td>Contact time</td><td><code>6</code></td><td>hours</td><td>Design basis</td><td><span class="badge-pass">CONFIRMED</span></td></tr>
+        <tr><td>Total PAA mass required</td><td><code>1.25</code></td><td>kg</td><td>50 mg/L × 25,000 L ÷ 1,000,000</td><td><span class="badge-pass">CONFIRMED EVR §1</span></td></tr>
+        <tr><td>P-101 nominal stock flow</td><td><code>12.2</code></td><td>L/h</td><td>0.208 kg/h ÷ 0.0171 kg/L</td><td><span class="badge-pass">CONFIRMED EVR §1</span></td></tr>
+        <tr><td>Nozzle count — design choice</td><td><code>8</code></td><td>off</td><td>2 × zones of 4, IKEUCHI AKIMist 03C TN</td><td><span class="badge-warn">MINIMUM IS 6 — see §2</span></td></tr>
+        <tr><td>Total liquid to nozzles</td><td><code>19.2</code></td><td>L/h</td><td>8 × 2.4 L/h per nozzle @ 3 bar</td><td><span class="badge-pass">CONFIRMED EVR §1</span></td></tr>
+        <tr><td>P-201 carrier water</td><td><code>7.0</code></td><td>L/h</td><td>19.2 − 12.2</td><td><span class="badge-pass">CONFIRMED EVR §3</span></td></tr>
+        <tr><td>Air demand total</td><td><code>232</code></td><td>NL/min</td><td>8 × 29 NL/min per nozzle @ 3 bar</td><td><span class="badge-pass">CONFIRMED EVR §2</span></td></tr>
+        <tr><td>Nozzle air pressure</td><td><code>3.0</code></td><td>barg</td><td>AKIMist 03C TN spec</td><td><span class="badge-warn">HOLD H03 — vendor duty confirmation</span></td></tr>
+        <tr><td>Mixed liquid concentration</td><td><code>0.953% w/w</code></td><td>—</td><td>(0.015 × 12.2) ÷ 19.2</td><td><span class="badge-pass">CONFIRMED EVR §1</span></td></tr>
+        <tr><td>P-101 operating range</td><td><code>5 – 15</code></td><td>L/h</td><td>BOM spec. Covers 25–50 mg/L</td><td><span class="badge-pass">CONFIRMED</span></td></tr>
+        <tr><td>Chemical boundary pressure</td><td><code>6.0</code></td><td>barg</td><td>BOM H02</td><td><span class="badge-warn">HOLD H02 — pressure engineer</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 2 EVR CORRECTIONS ── -->
+<section id="corrections">
+  <h2 class="sec-head"><span class="num">02</span>Corrections to the Engineering Validation Report</h2>
+  <p>Four arithmetic errors in the EVR change BOM items. These are corrections, not interpretations. Each is verified below. The corrected values replace the EVR and BOM-change recommendations in all subsequent sections.</p>
+
+  <div class="callout crit">
+    <strong>Important:</strong> Corrections 1–4 below supersede the EVR recommendations for VFD-101, P-202, PSV-101, and the nozzle minimum count. The BOM_CHANGES_IMPACT_RANKED document inherits errors from the EVR on items 2, 3 and 5.
+  </div>
+
+  <h3>Correction 1 — P-101 hydraulic power (affects VFD-101 sizing)</h3>
+  <div class="calc">
+<span class="label">EVR states:</span>  (0.203 L/min × 3.0 bar) / 600 = 0.0001515 kW → then uses 0.15 kW
+<span class="label">Actual result:</span> <span class="val">0.203 × 3.0 / 600 = 0.001015 kW  (≈ 1 W)</span>
+<span class="err">Error: EVR wrote 0.0001515 but carried forward 0.15 kW — a ×100 slip.</span>
+<span class="label">Consequence:</span> Motor = 0.001015 / 0.60 = 0.0017 kW theoretical.
+<span class="val">Practical minimum motor: 0.18–0.25 kW (pump mechanics and torque, not hydraulics).</span>
+<span class="val">VFD-101: 0.37 kW (smallest standard frame, replaces EVR/BOM recommendation of 1.5 kW).</span>
+  </div>
+
+  <h3>Correction 2 — P-202 compressor FAD (affects compressor sizing)</h3>
+  <div class="calc">
+<span class="label">EVR formula:</span>  FAD = 232 NL/min × (3.5 + 1) / 1 = 1,044 NL/min "≈ 17.4 L/min"
+<span class="err">Error 1: NL (normal litres) are already referenced to atmospheric conditions.
+        No pressure multiplier applies. The 1,044 NL/min result is fabricated.</span>
+<span class="err">Error 2: 1,044 NL/min ÷ 60 = 17.4 NL/s — the "L/min" unit label is also wrong.</span>
+<span class="label">Actual demand:</span> <span class="val">232 NL/min — this IS the FAD figure, with no multiplier.</span>
+<span class="val">Specified: ≥300 NL/min FAD at 7–8 bar storage, 2.2–3 kW class oil-free compressor.</span>
+<span class="val">Motor estimate: 232 × 0.012 kW/NL/min ≈ 2.8 kW (replaces EVR's 1.5 kW).</span>
+<span class="val">100–200 L receiver to buffer zone switching transients.</span>
+  </div>
+
+  <h3>Correction 3 — PSV-101 setpoint (affects pressure protection hierarchy)</h3>
+  <div class="calc">
+<span class="label">EVR/BOM-change recommendation:</span>  3.3 bar cracking
+<span class="err">Error: P-101 must discharge above nozzle inlet + mixing losses.
+       Nozzle pressure = 3.0 bar. With quill, static mixer and hose: P-101 discharge ≈ 3.5–4.0 barg.
+       A PSV set at 3.3 bar lifts during normal operation. The system cannot run.</span>
+<span class="label">Also: "Pilot-operated, 20 L/h rated" does not exist as a standard product for this service.</span>
+<span class="val">Correct pressure ladder:</span>
+<span class="val">  Normal discharge P-101:     3.5 – 4.0 barg</span>
+<span class="val">  PAH alarm:                   4.5 barg</span>
+<span class="val">  PSHH hard trip:              5.5 barg  (stops P-101, closes XV-101)</span>
+<span class="val">  PSV-101 cracking:            5.8 barg  (spring-loaded, PTFE-lined, return to TK-101)</span>
+<span class="val">  Chemical boundary:           6.0 barg  (H02 — pressure engineer to confirm)</span>
+<span class="val">  Equipment design pressure:   8.0 barg  (per BOM H02 note)</span>
+  </div>
+
+  <h3>Correction 4 — Nozzle count minimum</h3>
+  <div class="calc">
+<span class="label">EVR states:</span>  "8 nozzles minimum for 50 mg/L headspace target"
+<span class="label">Only three scenarios tested (2, 4, 8 nozzles). Scenario 5 and 6 were skipped.</span>
+<span class="val">Actual minimum: ceil(12.2 L/h ÷ 2.4 L/h per nozzle) = ceil(5.08) = <span class="ok">6 nozzles</span></span>
+<span class="label">6 nozzles: total liquid = 14.4 L/h; carrier = 14.4 – 12.2 = 2.2 L/h ✓ POSITIVE</span>
+<span class="val">8 nozzles is retained as a DESIGN CHOICE for two reasons:</span>
+<span class="val">  (a) 7.0 L/h carrier headroom for concentration trim across 25–50 mg/L range</span>
+<span class="val">  (b) 2 × 4-nozzle zones allow single-zone partial treatment and fault isolation</span>
+  </div>
+</section>
+
+<!-- ── 3 EQUIPMENT ASSESSMENT ── -->
+<section id="equipment">
+  <h2 class="sec-head"><span class="num">03</span>Equipment Compatibility Assessment</h2>
+
+  <h3>Tecpro Product Selection</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Tecpro Unit</th><th>EVR / Scope Role</th><th>Compatibility Finding</th><th>Decision</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>FOG 40/70 VAR 2</code><br>Triplex plunger 70 bar</td>
+          <td>Atomisation pressure source</td>
+          <td>70 bar single-fluid → 15–35 µm droplets (need &lt;10 µm). High shear degrades PAA before discharge. Turndown below ~50 bar collapses spray cone. Brass heads incompatible with PAA.</td>
+          <td><span class="badge-rej">REJECTED</span></td>
+        </tr>
+        <tr>
+          <td><code>FOG 40/70 APERTO</code><br>Open-frame plunger</td>
+          <td>OEM integration option</td>
+          <td>Same physics as VAR 2. Open frame only changes panel integration path, not droplet outcome.</td>
+          <td><span class="badge-rej">REJECTED</span></td>
+        </tr>
+        <tr>
+          <td><code>FOG APP</code><br>Bluetooth/timer unit</td>
+          <td>Standalone option</td>
+          <td>Consumer Bluetooth control — no PLC handoff, no hardwired I/O, no interlock capability.</td>
+          <td><span class="badge-rej">REJECTED</span></td>
+        </tr>
+        <tr>
+          <td><code>Vertical Multistage Skid with Inverter</code><br>316SS wet end, VFD+transducer</td>
+          <td>Carrier water booster 4.5 bar, flush supply</td>
+          <td>Suitable — pulseless flow, VFD PID on pressure transducer, 316SS available. Role reduced to water-only header; PAA never enters this pump. Minimum-flow recirculation line required (pump rated well above 7 L/h).</td>
+          <td><span class="badge-sel">SELECTED — water only</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Full Equipment List with Compatibility Assessment</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Tag</th><th>Item</th><th>BOM Spec</th><th>Revised Spec (this design)</th><th>Compatibility Note</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>TK-101</code></td><td>Chemical day tank</td>
+          <td>100 L nominal</td>
+          <td>100 L PE/PP, vented, PAA-compatible</td>
+          <td>Batch usage 73 L (1.25 kg ÷ 0.0171 kg/L). 27% headroom. Vent required — PAA off-gasses O₂.</td>
+          <td><span class="badge-pass">PASS — no change</span></td>
+        </tr>
+        <tr>
+          <td><code>P-101</code></td><td>Chemical metering pump</td>
+          <td>5–15 L/h peristaltic, 3 kW motor "ex only"</td>
+          <td>PTFE-diaphragm, PVDF head, 0–20 L/h at 8 barg. Motor 0.18–0.25 kW. VFD 0.37 kW.</td>
+          <td>Diaphragm replaces peristaltic: better PAA compatibility, no tube replacement, tighter flow accuracy. Covers 25–75 mg/L range (6.1–18.3 L/h). 3 kW motor rejected — 1000× oversized (see §2 Correction 1).</td>
+          <td><span class="badge-warn">SUBSTITUTED — type change</span></td>
+        </tr>
+        <tr>
+          <td><code>VFD-101</code></td><td>P-101 drive</td>
+          <td>TBD / EVR says 1.5 kW</td>
+          <td>0.37 kW (smallest standard frame)</td>
+          <td>Hydraulic power is 1 W. Practical motor 0.18–0.25 kW. 0.37 kW VFD gives full soft-start, stable PID 5–15 L/h. 1.5 kW worsens low-speed resolution.</td>
+          <td><span class="badge-crit">CORRECTED — EVR error</span></td>
+        </tr>
+        <tr>
+          <td><code>FT-101</code></td><td>Stock flow meter</td>
+          <td>0–15 L/h magnetic, ±2%</td>
+          <td>Micro-Coriolis 0–30 kg/h, ±0.2%, Hastelloy C-22</td>
+          <td>12.2 L/h is 81% of 15 L/h full-scale on a mag meter — acceptable. But 0.2% Coriolis gives ±0.02 L/h accuracy vs. ±0.3 L/h for the mag: essential for ±5% PPM control. Wetted material to be confirmed by vendor for 1.5% PAA.</td>
+          <td><span class="badge-warn">SUBSTITUTED — accuracy requirement</span></td>
+        </tr>
+        <tr>
+          <td><code>PT-101</code></td><td>P-101 discharge pressure</td>
+          <td>0–10 barg</td>
+          <td>0–10 barg, 316L/PTFE diaphragm</td>
+          <td>Range adequate. PAA-compatible diaphragm required.</td>
+          <td><span class="badge-pass">PASS — material note</span></td>
+        </tr>
+        <tr>
+          <td><code>PSV-101</code></td><td>Chemical relief valve</td>
+          <td>EVR/BOM: 3.3 bar cracking</td>
+          <td>Spring-loaded, PTFE-lined, 5.8 barg cracking, contained return to TK-101</td>
+          <td>3.3 bar would lift during normal operation at 3.5–4.0 barg discharge. Corrected — see §2.</td>
+          <td><span class="badge-crit">CORRECTED — EVR error</span></td>
+        </tr>
+        <tr>
+          <td><code>XV-101</code></td><td>Chemical isolation solenoid</td>
+          <td>Not in pilot BOM; referenced in scope</td>
+          <td>24 VDC NC solenoid valve, PTFE-lined, 6 barg rated, &lt;50 ms response</td>
+          <td>Required for E-stop, comms-loss and PSHH response. Must be fail-closed.</td>
+          <td><span class="badge-warn">ADDED — missing from BOM</span></td>
+        </tr>
+        <tr>
+          <td><code>WBT-201</code></td><td>Water break tank</td>
+          <td>Not in BOM</td>
+          <td>200 L PE, air-gap fill, level switch (LAL/LAH), drain</td>
+          <td>Required: provides suction head for Tecpro multistage, prevents PAA backflow to mains, holds flush volume (2–5 min at nozzle rate).</td>
+          <td><span class="badge-warn">ADDED — missing from BOM</span></td>
+        </tr>
+        <tr>
+          <td><code>P-201</code><br>(Tecpro MS)</td><td>Carrier water booster</td>
+          <td>0–20 L/h pump</td>
+          <td>Tecpro Vertical Multistage, 316SS wet end, VFD, 4.5 bar header, recirculation line to WBT</td>
+          <td>7 L/h is far below the pump's rated capacity. Minimum-flow recirculation valve set at 60–80% rated flow is mandatory to prevent cavitation and bearing damage. VFD holds header pressure, not flow.</td>
+          <td><span class="badge-warn">SUBSTITUTED — type + recirculation required</span></td>
+        </tr>
+        <tr>
+          <td><code>VFD-201</code></td><td>P-201 drive</td>
+          <td>TBD / BOM-change: 0.75–1.1 kW</td>
+          <td>Match Tecpro multistage motor (vendor to confirm); typically 0.75–1.5 kW</td>
+          <td>BOM-change recommendation reasonable. Confirm with Tecpro motor size on selected frame.</td>
+          <td><span class="badge-pass">CONFIRMED RANGE</span></td>
+        </tr>
+        <tr>
+          <td><code>FT-201</code></td><td>Carrier water flow meter</td>
+          <td>0–20 L/h magnetic</td>
+          <td>Micro-Coriolis 0–30 kg/h, ±0.2%, 316L wetted</td>
+          <td>Same accuracy argument as FT-101. 7 L/h on a 0–20 L/h mag = 35% of scale — poor accuracy. Water service: 316L acceptable.</td>
+          <td><span class="badge-warn">SUBSTITUTED — accuracy requirement</span></td>
+        </tr>
+        <tr>
+          <td><code>FCV-201</code></td><td>Carrier water trim valve</td>
+          <td>Metering valve (H03 — secondary only)</td>
+          <td>Micro-proportional valve, Cv ≈ 0.01, 316L, 25 µm upstream strainer</td>
+          <td>Secondary to P-201 header. Defined as trim only — no independent setpoint authority. P-201 VFD is primary. Strainer upstream is mandatory to prevent jamming.</td>
+          <td><span class="badge-pass">CONFIRMED — secondary role</span></td>
+        </tr>
+        <tr>
+          <td><code>MX-201</code></td><td>Inline static mixer</td>
+          <td>Not in BOM</td>
+          <td>316L, 8-element static mixer, injection quill upstream, PTFE check valve on chemical injection port</td>
+          <td>Required to homogenise stock into carrier before nozzles. Without it, concentration varies shot-to-shot and AIT-201 sample is meaningless.</td>
+          <td><span class="badge-warn">ADDED — missing from BOM</span></td>
+        </tr>
+        <tr>
+          <td><code>P-202</code></td><td>Air compressor</td>
+          <td>EVR: 1.5 kW, 17.4 L/min — both wrong</td>
+          <td>Oil-free rotary screw or piston, ≥300 NL/min FAD at 7–8 bar, 2.2–3 kW, 100–200 L receiver, 0.01 µm coalescing filter, refrigerant dryer</td>
+          <td>See §2 Correction 2. EVR arithmetic is incorrect. 2.8 kW estimated by rule of thumb. Receiver buffers zone-switching transients so PCV-202 holds 3.0 bar at the nozzle header.</td>
+          <td><span class="badge-crit">CORRECTED — EVR error</span></td>
+        </tr>
+        <tr>
+          <td><code>PCV-202</code></td><td>Air pressure regulator</td>
+          <td>Not in BOM</td>
+          <td>Back-pressure regulator, setpoint 3.0 barg, range 1–8 bar, 316L/brass body, downstream PSV at 5.0 barg</td>
+          <td>Must reduce 7–8 bar storage to the 3.0 bar nozzle spec. PSV on nozzle header prevents 8 barg reaching nozzle body (BOM note: "no 8 barg at unprotected nozzle").</td>
+          <td><span class="badge-warn">ADDED — missing from BOM</span></td>
+        </tr>
+        <tr>
+          <td><code>AS-201</code></td><td>Nozzle assembly</td>
+          <td>Count TBD</td>
+          <td>8 × IKEUCHI AKIMist 03C TN, 316L manifold, 2 zones of 4, zone XV valves</td>
+          <td>New only — micro-orifice erosion risk prohibits second-hand. Sourced via Tecpro. Minimum is 6; 8 chosen for headroom and zoning. Nozzle duty at 3.0 bar to be confirmed (H03).</td>
+          <td><span class="badge-warn">SPECIFIED — H03 open</span></td>
+        </tr>
+        <tr>
+          <td><code>AIT-201</code></td><td>PAA concentration analyser</td>
+          <td>Q46/85, liquid measurement</td>
+          <td>Sample-loop dilution stage, verify range for 0.95–1.1% w/w service. Role: blend verification and stock-strength trim. Not used for headspace control.</td>
+          <td>The Q46/85 measures PAA in solution, not headspace — confirmed by source documents. Range at ~10,000 mg/L liquid concentration needs vendor confirmation. Headspace measurement (H08) is a separate future item.</td>
+          <td><span class="badge-open">OPEN — range unresolved</span></td>
+        </tr>
+        <tr>
+          <td><code>PLC</code></td><td>Master control</td>
+          <td>Siemens S7-1500F + KTP700</td>
+          <td>As specified. ~14 AI / 4 AO / 28 DI / 16 DO estimated. T3 writes software; vendor proves integration.</td>
+          <td>Adequate for 5 control loops plus safety functions. STO/SIL2 capability of S7-1500F satisfies E-stop and PSHH architecture.</td>
+          <td><span class="badge-pass">CONFIRMED</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 4 MASS BALANCE ── -->
+<section id="mass-balance">
+  <h2 class="sec-head"><span class="num">04</span>Mass Balance — Verified Backward Calculation</h2>
+  <p>The EVR mass balance is arithmetically correct. These numbers are reproduced here as the governing figures for all equipment sizing.</p>
+
+  <div class="calc">
+<span class="label">Step 1 — Total PAA mass:</span>
+  <span class="val">50 mg/L × 25,000 L ÷ 1,000,000 = 1.25 kg PAA required per treatment</span>
+
+<span class="label">Step 2 — Injection rate:</span>
+  <span class="val">1.25 kg ÷ 6 h = 0.208 kg/h</span>
+
+<span class="label">Step 3 — Stock flow (P-101):</span>
+  PAA in stock = 1.5% × 1.14 kg/L ÷ 100 = 0.0171 kg/L
+  <span class="val">Stock flow = 0.208 ÷ 0.0171 = 12.2 L/h  ✓ within P-101 range (5–15 L/h)</span>
+
+<span class="label">Step 4 — Nozzle flow balance (8 nozzles):</span>
+  Total liquid = 8 × 2.4 = 19.2 L/h
+  Carrier water = 19.2 − 12.2 = <span class="val">7.0 L/h  ✓ positive</span>
+  Total air = 8 × 29 = <span class="val">232 NL/min  ✓</span>
+
+<span class="label">Step 5 — Mixed concentration:</span>
+  Ct = (0.015 × 12.2) ÷ (12.2 + 7.0) = 0.183 ÷ 19.2 = <span class="val">0.953% w/w  ≈ 9,530 mg/L liquid</span>
+
+<span class="label">Sensitivity — 25 mg/L scenario:</span>
+  Stock flow = 6.1 L/h → 6 nozzles sufficient → air = 174 NL/min
+
+<span class="label">Sensitivity — 75 mg/L scenario:</span>
+  Stock flow = 18.3 L/h → <span class="err">EXCEEDS P-101 max (15 L/h)</span>
+  → Extend contact time to 9 h, OR use higher-strength stock
+  <span class="warn">75 mg/L is OUT OF SCOPE for current P-101 spec without modification.</span>
+  </div>
+
+  <div class="callout warn">
+    <strong>EVR "discrepancy" note:</strong> The EVR flags 7.3 mg/L headspace as a discrepancy versus the 50 mg/L target. This is not an error — 7.3 mg/L is the per-hour dose. Integrated over 6 h with no losses, it gives 43.8 mg/L, approaching 50 mg/L when liquid density is included. The "discrepancy" arises from omitting the time dimension. The dose controller in §6 tracks cumulative mass, which is the correct closure.
+  </div>
+</section>
+
+<!-- ── 5 PFD ── -->
+<section id="pfd">
+  <h2 class="sec-head"><span class="num">05</span>Process Flow Diagram</h2>
+  <p>Two skids. Skid 101 on the left doses PAA stock. Skid 201 on the right handles carrier water, blending, air, and atomisation. The 10–25 m PTFE transfer hose connects them at the skid boundary.</p>
+
+  <div class="pfd-wrap">
+<pre class="mermaid">
+flowchart LR
+  subgraph S101["⬛ SKID 101 — CHEMICAL DOSING"]
+    direction TB
+    TK["TK-101\n100 L RTU\n1.5% PAA"]
+    XV101["XV-101\nIsolation\nNC solenoid"]
+    P101["P-101\nDiaphragm pump\n5–15 L/h"]
+    FT101["FT-101\nMicro-Coriolis\n0–30 kg/h"]
+    PT101["PT-101\n0–10 barg"]
+    PSV101["PSV-101\n5.8 barg\n→TK return"]
+    TK --> XV101 --> P101 --> FT101
+    FT101 --> PT101
+    FT101 -.-> PSV101
+  end
+
+  FT101 == "H-1: PTFE 6.35mm\n10–25 m" ==> QUILL
+
+  subgraph S201["⬛ SKID 201 — ATOMISATION"]
+    direction TB
+    WBT["WBT-201\n200 L break tank"]
+    TEC["Tecpro Multistage\nVFD 4.5 bar header"]
+    RECIRC["Min-flow\nrecirculation"]
+    FT201["FT-201\nMicro-Coriolis\n0–30 kg/h"]
+    FCV201["FCV-201\nTrim valve\nCv≈0.01"]
+    QUILL["Quill + PTFE check\nstock injection"]
+    MX["MX-201\nStatic mixer\n8-element 316L"]
+    AIT["AIT-201\nPAA analyser\nsample loop"]
+    XVA["XV-ZA\nZone A valve\n4 nozzles"]
+    XVB["XV-ZB\nZone B valve\n4 nozzles"]
+    NOZ["8 × AKIMist 03C TN\n2.4 L/h + 29 NL/min each"]
+    
+    CMP["P-202\nCompressor\n≥300 NL/min FAD\n2.2–3 kW"]
+    REC["100–200 L receiver\n7–8 bar"]
+    FIL["0.01 µm filter\n+ dryer"]
+    PCV["PCV-202\n3.0 barg set"]
+    AIRPSV["PSV-air\n5.0 barg"]
+    XVAA["XV-AA\nZone A air"]
+    XVAB["XV-AB\nZone B air"]
+
+    WBT --> TEC --> RECIRC
+    TEC --> FCV201 --> FT201 --> QUILL --> MX --> AIT --> XVA --> NOZ
+    AIT --> XVB --> NOZ
+    CMP --> REC --> FIL --> PCV --> AIRPSV
+    PCV --> XVAA --> NOZ
+    PCV --> XVAB --> NOZ
+  end
+</pre>
+  </div>
+</section>
+
+<!-- ── 6 CONTROL ── -->
+<section id="control">
+  <h2 class="sec-head"><span class="num">06</span>Control Architecture — Five Loops</h2>
+  <p>The outer dose controller is the critical addition missing from the BOM. It converts a flow-controlled system into a treatment-validated system, which is what closes the loop on H08.</p>
+
+  <div class="loop-grid">
+    <div class="loop-card">
+      <div class="lc-title">FIC-101 — Stock Flow (primary)</div>
+      <p>FT-101 Coriolis → PLC compares to setpoint → VFD-101 adjusts P-101 speed and stroke. Setpoint comes from the dose controller. Accuracy target: ±2% at 12.2 L/h steady state. Soft-start 2–3 s ramp on start.</p>
+    </div>
+    <div class="loop-card">
+      <div class="lc-title">FIC-201 — Carrier Flow (ratio)</div>
+      <p>Carrier setpoint = total nozzle capacity target minus FT-101 live reading. Tecpro VFD holds 4.5 bar header; FCV-201 trims flow to match ratio. FT-201 provides feedback. FCV-201 has no independent setpoint authority (H03 closure).</p>
+    </div>
+    <div class="loop-card">
+      <div class="lc-title">PIC-202 — Air Pressure</div>
+      <p>PCV-202 holds 3.0 barg at nozzle header via internal spring. PLC monitors PT-202; alarms on deviation &gt;0.2 bar. Zone air valves open/close without affecting header pressure — this is why the receiver is mandatory.</p>
+    </div>
+    <div class="loop-card">
+      <div class="lc-title">AIC-201 — Concentration Trim</div>
+      <p>AIT-201 sample-loop reads mixed liquid concentration. PLC compares to target (0.953% w/w). Slow trim loop (integral-only, τ_i ≈ 5 min) adjusts FCV-201 carrier setpoint. Not the primary control variable — the dose controller is.</p>
+    </div>
+    <div class="loop-card" style="grid-column: span 2;">
+      <div class="lc-title">DIC-001 — Dose Controller (outer / master)</div>
+      <p>Integrates FT-101 reading × stock concentration (0.0171 kg/L, updated by H01 assay) over time → cumulative PAA mass delivered. Run ends when mass target is reached (default 1.25 kg for 50 mg/L). This loop does not rely on a headspace sensor and is closed by chemistry and flow measurement alone. It is the direct answer to the BOM-change AIT-201 ambiguity: liquid measurement is used to calculate and verify dose; headspace validation (H08) is a separate field step requiring a gas-phase sensor not on this skid.</p>
+    </div>
+  </div>
+
+  <h3>Safety Interlocks (hardwired, not PLC-only)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Condition</th><th>Trigger</th><th>Action</th><th>Logic</th></tr></thead>
+      <tbody>
+        <tr><td>E-stop</td><td>Mushroom button, either skid</td><td>XV-101 closes, P-101 stops, zone liquid valves close</td><td>Hardwired 24 VDC, &lt;50 ms</td></tr>
+        <tr><td>PSHH-101</td><td>PT-101 ≥ 5.5 barg</td><td>P-101 STO, XV-101 close</td><td>Hardwired via safety relay</td></tr>
+        <tr><td>PSV-101</td><td>Mechanical, 5.8 barg cracking</td><td>Returns to TK-101 (contained)</td><td>Mechanical — no PLC</td></tr>
+        <tr><td>Low air pressure</td><td>PT-202 &lt; 2.5 barg</td><td>P-101 stops, XV-101 closes — no liquid without air</td><td>PLC interlock</td></tr>
+        <tr><td>Dry run / LAL-101</td><td>TK-101 low level</td><td>P-101 stops, alarm</td><td>PLC interlock</td></tr>
+        <tr><td>Bund leak / LIT-drain</td><td>Bund drain detector</td><td>Full ESD — all pumps, XV-101, zone valves</td><td>Hardwired</td></tr>
+        <tr><td>Comms loss (PLC→VFDs)</td><td>Watchdog timeout &gt;2 s</td><td>VFDs coast to stop, XV-101 closes</td><td>VFD safe-state config</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 7 P&ID NARRATIVE ── -->
+<section id="pid">
+  <h2 class="sec-head"><span class="num">07</span>P&ID Narrative</h2>
+  <p>This is a line-by-line narrative pending a formal drawn P&ID. Tags are consistent with the EVR and BOM. Lines shown as dashed are control signals (4–20 mA or PROFINET); solid lines are process.</p>
+
+  <h3>Skid 101 — Chemical Dosing</h3>
+  <p><strong>TK-101 → XV-101:</strong> Gravity or pump suction draws 1.5% PAA through a 100 µm suction strainer. XV-101 (NC solenoid, 24 VDC) is the first isolator — it closes on E-stop, PSHH, or comms loss. A manual isolation valve and sample point sit immediately upstream of XV-101.</p>
+  <p><strong>XV-101 → P-101:</strong> PTFE-diaphragm metering pump, PVDF head, 0–20 L/h at 8 barg. Motor 0.18–0.25 kW driven by VFD-101 (0.37 kW). Speed and stroke both modulated by FIC-101. A pulsation damper is recommended on the discharge side before FT-101.</p>
+  <p><strong>P-101 → FT-101 → PT-101/PSV-101:</strong> Micro-Coriolis FT-101 is the primary flow feedback. PT-101 monitors discharge pressure; its signal feeds both FIC-101 (for pump cavitation detection) and the PSHH-101 trip at 5.5 barg. PSV-101 (5.8 barg, spring-loaded, PTFE-lined) returns to TK-101 via a contained bypass — sized at 1.25× P-101 max flow (≈19 L/h).</p>
+  <p><strong>FT-101 outlet → H-1 transfer hose:</strong> PTFE 6.35 mm ID, rated ≥10 barg, 316SS fittings with Viton ferrules, 10–25 m long. Pressure drop at 12.2 L/h: &lt;0.02 bar (negligible). Both ends have manual isolation and a check valve to prevent backflow.</p>
+
+  <h3>Skid 201 — Atomisation</h3>
+  <p><strong>Mains → WBT-201 → Tecpro Multistage:</strong> Float-controlled fill to WBT-201 (200 L PE, air-gap fill). The Tecpro multistage draws from WBT-201 and maintains 4.5 barg on the carrier header via its integral VFD and pressure transducer. A minimum-flow recirculation line (FO-recirc, orifice-sized) returns to WBT-201 to keep the pump above its minimum stable flow at all times, including during the post-treatment flush cycle.</p>
+  <p><strong>Tecpro discharge → FCV-201 → FT-201:</strong> FCV-201 (micro-proportional, Cv ≈ 0.01) trims carrier flow. FT-201 (micro-Coriolis) provides the carrier flow feedback signal to FIC-201. A 25 µm strainer sits immediately upstream of FCV-201.</p>
+  <p><strong>H-1 arrival → quill → check valve → MX-201:</strong> Stock arrives at 3.5–4.0 barg and injects into the carrier stream via a 316L quill. A PTFE check valve on the quill prevents carrier backflow into the stock line. MX-201 (8-element 316L static mixer, L/D ≥ 40) ensures complete homogenisation before the AIT-201 sample point.</p>
+  <p><strong>MX-201 → AIT-201 sample → Zone valves → Nozzles:</strong> A slipstream sample is drawn to AIT-201 via a small PTFE loop with a peristaltic sample pump and return. The main stream splits into Zone A and Zone B at two 316L tee manifolds, each with a 24 VDC NC solenoid zone valve (XV-ZA, XV-ZB). Each zone feeds 4 × AKIMist 03C TN nozzles via a 316L distribution manifold with individual PTFE check valves and pressure gauges.</p>
+  <p><strong>Air train:</strong> P-202 (oil-free, 7–8 bar) → 100–200 L receiver → 0.01 µm coalescing filter and refrigerant dryer → PCV-202 (3.0 barg set) → air PSV (5.0 barg, discharges to atmosphere) → zone air solenoids (XV-AA, XV-AB, 24 VDC) → nozzle air inlets. Zone liquid and zone air valves are sequenced: air opens 2 s before liquid on start; air stays open 60 s after liquid closes on stop (blowdown).</p>
+</section>
+
+<!-- ── 8 GA ── -->
+<section id="ga">
+  <h2 class="sec-head"><span class="num">08</span>General Arrangement — Conceptual</h2>
+  <p>Concept only. Structural calculations, trailer mounting loads, and detailed dimensions require a mechanical engineer's sign-off. Weights are estimates pending vendor datasheets.</p>
+
+  <div class="ga-wrap">
+<svg viewbox="0 0 860 340" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, monospace" font-size="10">
+
+  <!-- Skid 101 -->
+  <rect x="10" y="10" width="300" height="320" rx="4" fill="#F0F4F8" stroke="#1558A0" stroke-width="2"/>
+  <text x="160" y="30" text-anchor="middle" font-weight="600" font-size="11" fill="#0F1E2E">SKID 101 — DOSING</text>
+  <text x="160" y="43" text-anchor="middle" fill="#5A7090">~1500 × 1000 × 1300 mm (est.)</text>
+
+  <!-- Bund -->
+  <rect x="20" y="55" width="130" height="200" rx="3" fill="#E8EEF5" stroke="#8099B0" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="85" y="70" text-anchor="middle" fill="#5A7090">Bunded tray</text>
+  <text x="85" y="82" text-anchor="middle" fill="#5A7090">110% of 100 L</text>
+
+  <!-- TK-101 -->
+  <rect x="30" y="90" width="110" height="80" rx="4" fill="#C8D8E8" stroke="#1558A0"/>
+  <text x="85" y="130" text-anchor="middle" font-weight="600" fill="#0F1E2E">TK-101</text>
+  <text x="85" y="143" text-anchor="middle" fill="#0F1E2E">100 L PE</text>
+  <text x="85" y="155" text-anchor="middle" fill="#0F1E2E">1.5% PAA</text>
+
+  <!-- Pump column -->
+  <rect x="165" y="55" width="135" height="200" rx="3" fill="#EEF2F6" stroke="#8099B0" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="232" y="70" text-anchor="middle" fill="#5A7090">Pump rack</text>
+
+  <!-- XV-101 -->
+  <rect x="172" y="80" width="50" height="28" rx="3" fill="#FFF3DC" stroke="#C07020"/>
+  <text x="197" y="93" text-anchor="middle" fill="#7A4000">XV-101</text>
+  <text x="197" y="104" text-anchor="middle" fill="#7A4000">NC sol.</text>
+
+  <!-- P-101 -->
+  <rect x="172" y="118" width="50" height="35" rx="3" fill="#DDEEFF" stroke="#1558A0"/>
+  <text x="197" y="132" text-anchor="middle" fill="#0A3070">P-101</text>
+  <text x="197" y="143" text-anchor="middle" fill="#0A3070">Diaphragm</text>
+  <text x="197" y="154" text-anchor="middle" fill="#0A3070">0-20 L/h</text>
+
+  <!-- FT-101 -->
+  <circle cx="197" cy="178" r="16" fill="#E6F5EE" stroke="#1A7A48"/>
+  <text x="197" y="182" text-anchor="middle" fill="#1A4030">FT-101</text>
+
+  <!-- PSV-101 -->
+  <rect x="240" y="100" width="50" height="28" rx="3" fill="#FDEAEA" stroke="#A01818"/>
+  <text x="265" y="113" text-anchor="middle" fill="#7A0000">PSV-101</text>
+  <text x="265" y="124" text-anchor="middle" fill="#7A0000">5.8 barg</text>
+
+  <!-- PT-101 -->
+  <circle cx="265" cy="178" r="14" fill="#EEF4FF" stroke="#1558A0"/>
+  <text x="265" y="182" text-anchor="middle" fill="#1558A0">PT-101</text>
+
+  <!-- Control panel -->
+  <rect x="165" y="265" width="135" height="55" rx="3" fill="#0F1E2E" stroke="#3A8FD4"/>
+  <text x="232" y="287" text-anchor="middle" fill="#C8D8E8">Control panel</text>
+  <text x="232" y="300" text-anchor="middle" fill="#7ABADF">VFD-101 + PLC I/O</text>
+  <text x="232" y="312" text-anchor="middle" fill="#7ABADF">Siemens S7-1500F</text>
+
+  <!-- Transfer hose label -->
+  <line x1="310" y1="178" x2="385" y2="178" stroke="#A01818" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="347" y="168" text-anchor="middle" fill="#7A0000">H-1 PTFE</text>
+  <text x="347" y="179" text-anchor="middle" fill="#7A0000">10–25 m</text>
+  <text x="347" y="190" text-anchor="middle" fill="#7A0000">6.35 mm ID</text>
+
+  <!-- Skid 201 -->
+  <rect x="385" y="10" width="465" height="320" rx="4" fill="#F0F4F8" stroke="#1A7A48" stroke-width="2"/>
+  <text x="617" y="30" text-anchor="middle" font-weight="600" font-size="11" fill="#0F1E2E">SKID 201 — ATOMISATION</text>
+  <text x="617" y="43" text-anchor="middle" fill="#5A7090">~2200 × 1000 × 1700 mm (est.)</text>
+
+  <!-- Water end -->
+  <rect x="395" y="55" width="150" height="230" rx="3" fill="#EEF2F6" stroke="#8099B0" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="470" y="70" text-anchor="middle" fill="#5A7090">Water end</text>
+
+  <!-- WBT-201 -->
+  <rect x="403" y="78" width="65" height="55" rx="3" fill="#C8D8E8" stroke="#1558A0"/>
+  <text x="435" y="100" text-anchor="middle" font-weight="600" fill="#0F1E2E">WBT-201</text>
+  <text x="435" y="113" text-anchor="middle" fill="#0F1E2E">200 L</text>
+  <text x="435" y="124" text-anchor="middle" fill="#0F1E2E">break tank</text>
+
+  <!-- Tecpro -->
+  <rect x="476" y="78" width="62" height="55" rx="3" fill="#DDEEFF" stroke="#1558A0"/>
+  <text x="507" y="98" text-anchor="middle" fill="#0A3070">Tecpro</text>
+  <text x="507" y="110" text-anchor="middle" fill="#0A3070">Multistage</text>
+  <text x="507" y="122" text-anchor="middle" fill="#0A3070">4.5 bar</text>
+
+  <!-- FCV-201 + FT-201 -->
+  <rect x="403" y="145" width="55" height="28" rx="3" fill="#EEF4FF" stroke="#1558A0"/>
+  <text x="430" y="158" text-anchor="middle" fill="#1558A0">FCV-201</text>
+  <text x="430" y="169" text-anchor="middle" fill="#1558A0">trim</text>
+
+  <circle cx="487" cy="158" r="15" fill="#E6F5EE" stroke="#1A7A48"/>
+  <text x="487" y="162" text-anchor="middle" fill="#1A4030">FT-201</text>
+
+  <!-- Compressor end -->
+  <rect x="395" y="200" width="135" height="80" rx="3" fill="#FFF8EE" stroke="#C07020" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="462" y="215" text-anchor="middle" fill="#7A4000">Air supply</text>
+
+  <!-- P-202 -->
+  <rect x="403" y="222" width="55" height="40" rx="3" fill="#FFF3DC" stroke="#C07020"/>
+  <text x="430" y="238" text-anchor="middle" fill="#7A4000">P-202</text>
+  <text x="430" y="250" text-anchor="middle" fill="#7A4000">≥300 NL/m</text>
+  <text x="430" y="261" text-anchor="middle" fill="#7A4000">2.2-3 kW</text>
+
+  <!-- Receiver -->
+  <rect x="465" y="222" width="55" height="40" rx="3" fill="#FFF3DC" stroke="#C07020"/>
+  <text x="492" y="242" text-anchor="middle" fill="#7A4000">Receiver</text>
+  <text x="492" y="254" text-anchor="middle" fill="#7A4000">100-200 L</text>
+
+  <!-- Central pipe rack / blend zone -->
+  <rect x="553" y="55" width="130" height="230" rx="3" fill="#EEF4FF" stroke="#1558A0" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="618" y="70" text-anchor="middle" fill="#1558A0">Blend zone</text>
+
+  <!-- Quill + MX-201 -->
+  <rect x="560" y="80" width="55" height="35" rx="3" fill="#DDEEFF" stroke="#1558A0"/>
+  <text x="587" y="96" text-anchor="middle" fill="#0A3070">Quill +</text>
+  <text x="587" y="108" text-anchor="middle" fill="#0A3070">MX-201</text>
+
+  <!-- AIT-201 -->
+  <circle cx="615" cy="150" r="18" fill="#F2EEFF" stroke="#6040A0"/>
+  <text x="615" y="148" text-anchor="middle" fill="#3A2060">AIT</text>
+  <text x="615" y="160" text-anchor="middle" fill="#3A2060">-201</text>
+
+  <!-- PCV-202 -->
+  <rect x="560" y="180" width="55" height="28" rx="3" fill="#FFF3DC" stroke="#C07020"/>
+  <text x="587" y="196" text-anchor="middle" fill="#7A4000">PCV-202</text>
+  <text x="587" y="207" text-anchor="middle" fill="#7A4000">3.0 barg</text>
+
+  <!-- Nozzle end -->
+  <rect x="691" y="55" width="150" height="230" rx="3" fill="#E6F5EE" stroke="#1A7A48" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="766" y="70" text-anchor="middle" fill="#1A4030">Nozzle end</text>
+
+  <!-- Zone A -->
+  <rect x="699" y="80" width="60" height="80" rx="3" fill="#C8EEE0" stroke="#1A7A48"/>
+  <text x="729" y="100" text-anchor="middle" font-weight="600" fill="#0A3020">Zone A</text>
+  <text x="729" y="115" text-anchor="middle" fill="#0A3020">4 × 03C TN</text>
+  <text x="729" y="127" text-anchor="middle" fill="#0A3020">9.6 L/h liq</text>
+  <text x="729" y="139" text-anchor="middle" fill="#0A3020">116 NL/min</text>
+  <text x="729" y="152" text-anchor="middle" fill="#0A3020">air</text>
+
+  <!-- Zone B -->
+  <rect x="699" y="172" width="60" height="80" rx="3" fill="#C8EEE0" stroke="#1A7A48"/>
+  <text x="729" y="192" text-anchor="middle" font-weight="600" fill="#0A3020">Zone B</text>
+  <text x="729" y="207" text-anchor="middle" fill="#0A3020">4 × 03C TN</text>
+  <text x="729" y="219" text-anchor="middle" fill="#0A3020">9.6 L/h liq</text>
+  <text x="729" y="231" text-anchor="middle" fill="#0A3020">116 NL/min</text>
+  <text x="729" y="243" text-anchor="middle" fill="#0A3020">air</text>
+
+  <!-- Zone valves -->
+  <rect x="767" y="100" width="60" height="25" rx="3" fill="#FFF3DC" stroke="#C07020"/>
+  <text x="797" y="116" text-anchor="middle" fill="#7A4000">XV-ZA XV-AA</text>
+
+  <rect x="767" y="192" width="60" height="25" rx="3" fill="#FFF3DC" stroke="#C07020"/>
+  <text x="797" y="208" text-anchor="middle" fill="#7A4000">XV-ZB XV-AB</text>
+
+  <!-- Mist output -->
+  <text x="840" y="140" text-anchor="middle" fill="#1A4030" font-weight="600">🌫</text>
+  <text x="840" y="155" text-anchor="middle" fill="#1A4030">&lt;10 µm</text>
+  <text x="840" y="167" text-anchor="middle" fill="#1A4030">dry fog</text>
+
+  <!-- Control panel Skid 201 -->
+  <rect x="553" y="268" width="275" height="45" rx="3" fill="#0F1E2E" stroke="#3A8FD4"/>
+  <text x="690" y="288" text-anchor="middle" fill="#C8D8E8">Control panel — VFD-201 + PLC I/O + 24 VDC PSU</text>
+  <text x="690" y="303" text-anchor="middle" fill="#7ABADF">Zone solenoid drivers · Safety relays · Comms to Skid 101</text>
+
+  <!-- Legend -->
+  <rect x="10" y="285" width="300" height="45" rx="3" fill="#F6F8FB" stroke="#C8D4E0"/>
+  <text x="20" y="300" fill="#0F1E2E" font-weight="600">Legend</text>
+  <rect x="20" y="307" width="10" height="6" fill="none" stroke="#1558A0" stroke-width="2"/>
+  <text x="35" y="315" fill="#5A7090">Equipment</text>
+  <line x1="100" y1="312" x2="120" y2="312" stroke="#A01818" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="125" y="315" fill="#5A7090">Transfer line</text>
+  <rect x="200" y="307" width="10" height="6" fill="#FFF3DC" stroke="#C07020"/>
+  <text x="215" y="315" fill="#5A7090">Safety/air</text>
+  <rect x="260" y="307" width="10" height="6" fill="#C8EEE0" stroke="#1A7A48"/>
+  <text x="275" y="315" fill="#5A7090">Nozzles</text>
+</svg>
+  </div>
+
+  <div class="tbl-wrap" style="margin-top:18px">
+    <table>
+      <thead><tr><th>Skid</th><th>Footprint (est.)</th><th>Operating weight (est.)</th><th>Heaviest lift item</th><th>Bund requirement</th></tr></thead>
+      <tbody>
+        <tr><td>101 Dosing</td><td>1,500 × 1,000 mm</td><td>350 kg</td><td>TK-101 full: ~115 kg</td><td>110 L minimum (110% of TK-101)</td></tr>
+        <tr><td>201 Atomisation</td><td>2,200 × 1,000 mm</td><td>900 kg (inc. 200 L water)</td><td>P-202 + receiver: ~120 kg est.</td><td>220 L minimum (110% of WBT-201)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout warn">
+    <strong>Structural note:</strong> The Background Scope and Ion Shield Scope Document specify tandem-axle trailer mounting, IEC 60721-3-4 class 4M5 vibration rating, ISO corner castings, and forklift pockets. These are structural requirements that govern the skid frame design and must be confirmed by a structural/mechanical engineer before fabrication. Weights above are preliminary estimates only.
+  </div>
+</section>
+
+<!-- ── 9 INTERCONNECTIONS ── -->
+<section id="interconnect">
+  <h2 class="sec-head"><span class="num">09</span>Interconnection Schedule</h2>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Ref</th><th>From</th><th>To</th><th>Medium</th><th>Size / Spec</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>H-1</code></td><td>FT-101 outlet, Skid 101</td><td>Quill inlet, Skid 201</td><td>PAA stock 1.5% w/w</td><td>PTFE 6.35 mm ID, ≥10 barg, 316SS fittings, Viton ferrules; check valves each end</td><td>10–25 m depending on trailer spacing. dP &lt;0.02 bar.</td></tr>
+        <tr><td><code>W-1</code></td><td>Site mains</td><td>WBT-201 fill valve</td><td>Potable water</td><td>½" BSP, air-gap fill, float valve</td><td>Backflow prevention required.</td></tr>
+        <tr><td><code>A-1</code></td><td>P-202 outlet, Skid 201</td><td>Internal (all on Skid 201)</td><td>Instrument/process air</td><td>½" 316L tube, 7–8 bar; regulated to 3.0 bar at nozzle header</td><td>Internal to Skid 201. No inter-skid air connection needed.</td></tr>
+        <tr><td><code>SIG-1</code></td><td>FT-101, PT-101, XV-101 — Skid 101</td><td>S7-1500F PLC — Skid 201 panel</td><td>4–20 mA / PROFINET</td><td>2-pair shielded, 25 m; or PROFINET Cat6e if panel-to-panel bus</td><td>Inter-skid signal cable. Gland into IP65 panel each end.</td></tr>
+        <tr><td><code>ESD-1</code></td><td>E-stop circuit, Skid 101</td><td>E-stop circuit, Skid 201</td><td>24 VDC hardwired ESD</td><td>2-core shielded, rated for drag/transport flex</td><td>Series loop: either E-stop drops both skids simultaneously.</td></tr>
+        <tr><td><code>PWR-1</code></td><td>Site 3-phase supply</td><td>Skid 101 DB</td><td>415 VAC 3-phase + N + E</td><td>TPN MCB, size TBD by electrical engineer</td><td>Skid 101 local DB feeds VFD-101, 24 VDC PSU, solenoids.</td></tr>
+        <tr><td><code>PWR-2</code></td><td>Site 3-phase supply</td><td>Skid 201 DB</td><td>415 VAC 3-phase + N + E</td><td>TPN MCB, size TBD</td><td>Skid 201 feeds Tecpro VFD-201, VFD-202 (compressor), PLC, solenoids.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 10 OPERATING SEQUENCE ── -->
+<section id="sequence">
+  <h2 class="sec-head"><span class="num">10</span>Operating Sequence</h2>
+
+  <h3>Start-up</h3>
+  <div class="seq">
+    <div class="seq-step"><div></div><div class="seq-step-body"><strong>Pre-start checks</strong><p>Verify TK-101 level (LAH between 20% and 90%), WBT-201 level, bund dry, all manual isolations open, E-stop reset. Enter batch parameters: PPM target, contact time, pile void volume.</p></div></div>
+    <div class="seq-step"><div></div><div class="seq-step-body"><strong>Air on first</strong><p>P-202 starts → receiver charges to 7–8 bar → PCV-202 holds 3.0 barg on nozzle header. Confirm PT-202 ≥ 2.8 bar before proceeding. Zone air valves XV-AA and XV-AB open.</p></div></div>
+    <div class="seq-step"><div></div><div class="seq-step-body"><strong>Carrier water on</strong><p>Tecpro multistage starts → FCV-201 opens to initial carrier setpoint. FT-201 confirms flow within ±10% of setpoint before P-101 is permitted to start.</p></div></div>
+    <div class="seq-step"><div></div><div class="seq-step-body"><strong>Liquid zone valves open</strong><p>XV-ZA and XV-ZB open. Nozzles now receive carrier water only — confirms nozzle hydraulics before chemical is introduced.</p></div></div>
+    <div class="seq-step"><div></div><div class="seq-step-body"><strong>P-101 ramp</strong><p>XV-101 opens. P-101 ramps from 0 to stock setpoint (12.2 L/h) over 2–3 s. FIC-101 enters closed-loop control. Dose controller begins accumulating mass (FT-101 × 0.0171 kg/L × dt).</p></div></div>
+  </div>
+
+  <h3>Normal run</h3>
+  <p>Dose controller runs to mass target (1.25 kg for 50 mg/L, 6 h). FIC-201 adjusts carrier to maintain constant total flow to nozzles. AIC-201 trims carrier setpoint slowly if liquid concentration drifts. PLC logs FT-101, FT-201, PT-101, PT-202, AIT-201 at 10 s intervals to batch record.</p>
+
+  <h3>Normal stop</h3>
+  <div class="seq">
+    <div class="seq-step"><div></div><div class="seq-step-body"><strong>P-101 off, XV-101 close</strong><p>Dose target reached. P-101 stops. XV-101 closes. Stock line is now isolated.</p></div></div>
+    <div class="seq-step"><div></div><div class="seq-step-body"><strong>Carrier flush</strong><p>Carrier continues at nozzle-limited flow for 2–5 min, purging residual stock from hose H-1, quill, MX-201 and nozzle manifold. PLC monitors FT-201; flush continues until AIT-201 reads &lt;50 mg/L or timer expires.</p></div></div>
+    <div class="seq-step"><div></div><div class="seq-step-body"><strong>Air blowdown</strong><p>Carrier stops. Zone air solenoids stay open for 60 s at 3.0 bar, clearing all liquid from nozzle orifices and manifold branches. Prevents crystallisation.</p></div></div>
+    <div class="seq-step"><div></div><div class="seq-step-body"><strong>System safe state</strong><p>All zone valves closed. Tecpro multistage stops. P-202 coasts to stop. Batch record saved with total mass delivered, duration, and peak pressures.</p></div></div>
+  </div>
+
+  <h3>Trip response (any hardwired ESD)</h3>
+  <p>XV-101 closes + P-101 STO in &lt;50 ms. Zone liquid valves close. Air blowdown initiates if compressor still running (60 s). PLC logs trip cause and timestamp. System latches — manual reset required after fault cleared.</p>
+</section>
+
+<!-- ── 11 GAP REGISTER ── -->
+<section id="gaps">
+  <h2 class="sec-head"><span class="num">11</span>Gap & Hold Register</h2>
+  <p>Items that must close before fabrication release are marked CRITICAL. Items required before FAT are marked FAT BLOCK.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Ref</th><th>Item</th><th>Description</th><th>Blocks</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><code>H01</code></td><td>PAA assay</td><td>Confirm Jet-Ag stock is 15% w/w. If 10%, all flows must be recalculated (+50%). This design's mass balance is invalid without confirmation.</td><td>All sizing</td><td><span class="badge-crit">CRITICAL — OPEN</span></td></tr>
+        <tr><td><code>H02</code></td><td>Pressure boundary</td><td>Pressure engineer to confirm 6.0 barg chemical boundary and 8.0 barg design pressure. Governs PSV-101 setpoint, hose rating, and equipment design pressure.</td><td>PSV-101, H-1, PT-101</td><td><span class="badge-crit">CRITICAL — OPEN</span></td></tr>
+        <tr><td><code>H03</code></td><td>Nozzle duty at 3.0 bar</td><td>Tecpro to confirm AKIMist 03C TN delivers 2.4 L/h liquid and 29 NL/min air at exactly 3.0 bar. If the nozzle curve is different, all flow balances change.</td><td>AS-201, FIC-101, FIC-201, P-202</td><td><span class="badge-crit">CRITICAL — OPEN</span></td></tr>
+        <tr><td><code>H04</code></td><td>Transfer line safety</td><td>Confirm XV-101 location and isolation logic for multi-branch configurations. If more branches are added in future, relief and interlock architecture must be reviewed.</td><td>H-1, XV-101</td><td><span class="badge-warn">OPEN</span></td></tr>
+        <tr><td><code>H05</code></td><td>Structural and nozzle layout</td><td>Physical nozzle bank layout, boom arm configuration, and spatial coverage within the treatment enclosure. Not in scope of this skid design — process owner item.</td><td>FAT Phase 3</td><td><span class="badge-warn">OPEN — owner scope</span></td></tr>
+        <tr><td><code>H06</code></td><td>Electrical panel sizing</td><td>Full load schedule needed: P-101 motor, Tecpro motor, P-202 motor, 24 VDC PSU, solenoids, PLC, HMI. Determines DB rating and cable sizes on both skids.</td><td>PWR-1, PWR-2</td><td><span class="badge-warn">OPEN</span></td></tr>
+        <tr><td><code>H07</code></td><td>Zone valve interlocks</td><td>Define interlock logic for single-zone vs. dual-zone operation, including flow redistribution when one zone is closed during a run.</td><td>FIC-101, FIC-201, PIC-202</td><td><span class="badge-warn">OPEN</span></td></tr>
+        <tr><td><code>H08</code></td><td>Field efficacy / headspace measurement</td><td>50 mg/L headspace validation requires a gas-phase PAA analyser in the treatment enclosure. This is NOT on either skid. The dose controller closes the loop on delivered mass; headspace PPM must be verified independently by a field instrument before H08 can close.</td><td>FAT Phase 3</td><td><span class="badge-crit">CRITICAL — NOT IN SKID SCOPE</span></td></tr>
+        <tr><td><code>H09</code></td><td>Water-only FAT feasibility</td><td>Confirm that Phase 1 water-only FAT is sufficient to prove flow and pressure control before PAA is introduced. Define go/no-go criteria for each FAT phase.</td><td>FAT Phase 1</td><td><span class="badge-warn">OPEN</span></td></tr>
+        <tr><td><code>G-01</code></td><td>AIT-201 range</td><td>The Q46/85 reads PAA in solution. The mixed stream is ~9,530 mg/L (0.95% w/w). Confirm analyser range and sample conditioning (dilution stage likely required) with ATI before specifying.</td><td>AIC-201 loop</td><td><span class="badge-crit">CRITICAL — OPEN</span></td></tr>
+        <tr><td><code>G-02</code></td><td>FT-101/FT-201 material approval</td><td>Hastelloy C-22 or 316L Coriolis wetted parts: confirm compatibility with 1.5% PAA service with the meter vendor.</td><td>FT-101, FT-201</td><td><span class="badge-warn">OPEN — vendor confirmation</span></td></tr>
+        <tr><td><code>G-03</code></td><td>Tecpro multistage minimum flow</td><td>Confirm minimum stable flow of the selected Tecpro multistage frame at 4.5 bar. Size the recirculation orifice/valve accordingly. If Tecpro cannot confirm, substitute a VFD gear pump or diaphragm pump for P-201.</td><td>P-201, FCV-201</td><td><span class="badge-warn">OPEN — vendor confirmation</span></td></tr>
+        <tr><td><code>G-04</code></td><td>75 mg/L scenario</td><td>Stock flow at 75 mg/L (18.3 L/h) exceeds P-101 max (15 L/h). Either extend contact time to 9 h, use higher-strength stock, or accept that the current skid only covers 25–50 mg/L. Decision required before design freeze.</td><td>P-101, TK-101, dose controller</td><td><span class="badge-warn">OPEN — scope decision</span></td></tr>
+        <tr><td><code>G-05</code></td><td>Headspace worker safety</td><td>50 mg/L PAA in void air is well above occupational exposure limits. The treatment enclosure requires remote start, interlocked access control, and atmospheric PAA monitoring. These are site/process owner items but must be coordinated with this skid's ESD design.</td><td>ESD-1, safety case</td><td><span class="badge-crit">CRITICAL — OWNER ACTION</span></td></tr>
+        <tr><td><code>G-06</code></td><td>Drawn P&ID</td><td>This package provides a P&ID narrative and PFD only. A formal drawn P&ID is required before detailed engineering, fabrication pricing, and FAT procedure writing.</td><td>All</td><td><span class="badge-crit">REQUIRED NEXT STEP</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout info" style="margin-top:24px">
+    <strong>Recommended next steps in priority order:</strong><br>
+    (1) Close H01 — PAA assay confirmation.<br>
+    (2) Close H03 — Tecpro nozzle duty confirmation at 3.0 bar.<br>
+    (3) Resolve G-03 — Tecpro minimum-flow confirmation; substitute P-201 type if needed.<br>
+    (4) Resolve G-01 — AIT-201 range and sample conditioning with ATI.<br>
+    (5) Close H02 — Pressure engineer confirms boundary and PSV-101 setpoint.<br>
+    (6) Issue G-06 — Drawn P&ID to contractor for pricing.<br>
+    (7) Plan H09 — Water-only FAT protocol with go/no-go criteria.<br>
+    (8) Action G-05 — Headspace safety design (owner/site, not skid scope).
+  </div>
+</section>
+
+</main>
+
+<script>
+// Active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('nav a');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('nav a[href="#' + e.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => obs.observe(s));
+</script>
+
+<!--claude-mermaid-runtime-begin:3477-->
+<style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
+<script src="/_runtime/mermaid-11.16.1.min.js"></script>
+<script>(function(){
+var CFG={"palettes":{"light":{"surface":"#f4efe4","text":"#42392e","line":"#8a7f6d","border":"#7a6c52","bg":"#fffdf8"},"dark":{"surface":"#262b34","text":"#f2f3f5","line":"#a8adb8","border":"#9aa4b8","bg":"#1f232b"}}};
+if(typeof mermaid==='undefined')return;
+var pres=Array.prototype.slice.call(document.querySelectorAll('pre.mermaid')).filter(function(p){if(p.hasAttribute('data-claude-mermaid-claimed'))return false;p.setAttribute('data-claude-mermaid-claimed','1');return true;});
+if(!pres.length)return;
+var mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
+var root=document.documentElement;
+var items=pres.map(function(pre){
+var mount=document.createElement('div');mount.className='mermaid-diagram';
+return {pre:pre,mount:mount,src:pre.textContent||''};
+});
+var seq=0;
+var renderGen=0;
+var lastKey='';
+function pageBg(fallback){
+var els=[document.body,document.documentElement];
+for(var i=0;i<els.length;i++){
+var c=els[i]&&getComputedStyle(els[i]).backgroundColor;
+if(c&&c!=='transparent'&&c!=='rgba(0, 0, 0, 0)')return c;
+}
+return fallback;
+}
+function render(){
+var theme=root.getAttribute('data-theme');
+var dark=theme==='dark'||(!!(mq&&mq.matches)&&theme!=='light');
+var pal=dark?CFG.palettes.dark:CFG.palettes.light;
+var bg=pageBg(pal.bg);
+var key=(dark?'d':'l')+'|'+bg;
+if(key===lastKey)return;
+lastKey=key;
+var gen=++renderGen;
+var font=getComputedStyle(document.body).fontFamily||'sans-serif';
+var nat={useMaxWidth:false};
+mermaid.initialize({
+startOnLoad:false,securityLevel:'strict',theme:'base',
+flowchart:nat,sequence:nat,er:nat,state:nat,class:nat,pie:nat,
+gantt:nat,journey:nat,timeline:nat,gitGraph:nat,mindmap:nat,xyChart:nat,
+quadrantChart:nat,sankey:nat,c4:nat,requirement:nat,block:nat,
+packet:nat,kanban:nat,architecture:nat,radar:nat,
+themeVariables:{background:bg,mainBkg:pal.surface,primaryColor:pal.surface,
+primaryTextColor:pal.text,lineColor:pal.line,primaryBorderColor:pal.border,
+nodeBorder:pal.border,clusterBorder:pal.border,edgeLabelBackground:bg,
+clusterBkg:'rgba(127,127,127,0.07)',titleColor:pal.text,
+darkMode:dark,rowOdd:bg,rowEven:'rgba(127,127,127,0.07)',
+attributeBackgroundColorOdd:bg,attributeBackgroundColorEven:'rgba(127,127,127,0.07)',
+fontSize:'16px',fontFamily:font},
+themeCSS:'.node rect, .node circle, .node polygon, .node path, .cluster rect { stroke-width: 2px; }'
+});
+items.forEach(function(it){
+var id='claude-mermaid-'+seq++;
+mermaid.render(id,it.src).then(function(r){
+if(gen!==renderGen)return;
+var prev=it.pre.previousElementSibling;
+if(prev&&prev.className==='mermaid-diagram'&&prev!==it.mount)return;
+it.mount.innerHTML=r.svg;
+if(!it.mount.parentNode)it.pre.parentNode.insertBefore(it.mount,it.pre);
+it.pre.style.display='none';
+},function(){
+var scratch=document.getElementById(id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+scratch=document.getElementById('d'+id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+if(gen!==renderGen)return;
+if(it.mount.parentNode)it.mount.parentNode.removeChild(it.mount);
+it.pre.style.display='';
+});
+});
+}
+render();
+if(mq&&mq.addEventListener)mq.addEventListener('change',render);
+if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
+})();</script>
+<!--claude-mermaid-runtime-end-->
+</body>
+</html>
